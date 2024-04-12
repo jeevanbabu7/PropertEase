@@ -1,0 +1,9 @@
+.c-container {
+    justify-content: space-between;
+    gap: 4rem;
+    
+}
+.c-container > img {
+    height: 5rem;
+
+}

@@ -1,0 +1,14 @@
+.white-gradient {
+    width: 18rem;
+    height: 16rem;
+    position: absolute;
+    top: 13.5rem;
+    left: 8rem;
+    z-index: 1;
+    background-color: rgb(59, 57, 57);
+    filter: blur(100px);
+}
+
+.group1 {
+    z-index: -1;
+}

@@ -1,0 +1,21 @@
+.inner-container {
+    gap: 1.5rem;
+    background-color: #4161df;
+    padding: 2rem;
+    border-radius: 10px;
+    text-align: center;
+
+}
+
+.inner-container .primaryText {
+    color: white;
+    font-weight: 600;
+
+}
+.inner-container .secondaryText {
+    color: rgba(255, 255, 255, .5);
+}
+
+.get-started-btn {
+    border: 2px solid white;
+}
