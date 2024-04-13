@@ -3,7 +3,7 @@ import Hamburger from 'hamburger-react';
 import './header.css';
 import { RampRight } from '@mui/icons-material';
 import OutsideClickHandler from "react-outside-click-handler";
-
+import { Link } from 'react-router-dom';
 const Header = () => {
     const [menuOpen, setMenuOpen] = useState(false);
 
@@ -27,13 +27,14 @@ const Header = () => {
                 <h1>Propertease</h1>
                 <OutsideClickHandler onOutsideClick={closeMenu}>
                     <div style={getMenuStyles()} className="h-menu">
-                        <a href="">Home</a>
+                        <Link to='/'><a href="">Home</a></Link>
                         <a href="">Residencies</a>
                         <a href="">Contact Us</a>
                         <a href="#residencies">FAQ</a>
-                        <button className="button">
-                            <a href="">Sign in</a>
-                        </button>
+                        <Link to='/log-in'>                        
+                            <button className="button">
+                                <a href="">Sign in</a>
+                            </button></Link>
                     </div>
                 </OutsideClickHandler>
                 

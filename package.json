@@ -1,0 +1,25 @@
+{
+  "name": "vite-project",
+  "version": "1.0.0",
+  "description": "\"# Mini-project\"",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jeevanbabu7/Mini-project.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jeevanbabu7/Mini-project/issues"
+  },
+  "homepage": "https://github.com/jeevanbabu7/Mini-project#readme",
+  "dependencies": {
+    "express": "^4.19.2",
+    "nodemon": "^3.1.0"
+  }
+}

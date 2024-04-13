@@ -1,12 +1,7 @@
-import Header from './components/header/header'
-import Main from './components/main/main'
-import Comapanies from './components/companies/companies'
-import Residencies from './components/residencies/residencies'
-import Value from './components/value/value'
-import Contact from './components/contact/contact'
-import GetStarted from './components/GetStarted/getStarted'
-import Footer from './components/footer/footer'
-import FAQ from './components/FAQ/FAQ'
+import {BrowserRouter as Router , Routes,Route} from 'react-router-dom'
+import Home from './components/home/home'
+import SignUp from './components/authentication/signup'
+import Login from './components/authentication/login'
 import './App.css'
 import './index.css'
 
@@ -14,25 +9,14 @@ function App() {
 
   return (
     <>
-      <div className='App'>
-        <div>
-          <div className='white-gradient'/>
-          <div className='group1'>
-              <Header />
-              <Main />
-          </div>
-        </div>
-
-        <Comapanies />
-        <Residencies />
-        <Value />
-        <Contact />
-        <FAQ />
-        <GetStarted />
-        <Footer />
-
-
-      </div>
+      <Router>
+        <Routes>
+          <Route path='/' element={<Home />}/>
+          <Route path='/sign-up' element={<SignUp />}/>
+          <Route path='/log-in' element={<Login />}/>
+          <Route path='/sign-up' element={<SignUp />}/>
+        </Routes>
+      </Router>
 
     </>
   )
