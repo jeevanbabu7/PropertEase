@@ -1,6 +1,5 @@
 .profile-container {
     height:100vh;
-    background-color: cyan;
     position: relative;
     top: 6.5rem;
 }
@@ -8,4 +7,14 @@
 .profile--img {
     width: 50px;
     border-radius: 50%;
+}
+
+.userid--box > p {
+    color: var(--primary);
+    font-weight: 600;
+}
+
+.text--danger {
+    color: rgb(174, 13, 13);
+    font-weight: 500;
 }
