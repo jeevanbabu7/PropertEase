@@ -13,7 +13,7 @@ const GetStarted = () => {
 
                 <button className='button get-started-btn'>
                     <form action="/properties">
-                        <a href="/properties">Get Started</a>
+                        <a href="/sign-in">Get Started</a>
                     </form>
                 </button>
             </div>

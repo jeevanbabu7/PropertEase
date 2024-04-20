@@ -23,7 +23,7 @@ const Main = () => {
                     </div>
 
                     <div className="hero-desc">
-                        <span>Find a variety of Houses</span>
+                        <span>Find a variety of Houses.</span>
                         <span>Forget all the difficulties</span>
                     </div>
 
@@ -39,7 +39,7 @@ const Main = () => {
                                 <CountUp start={8000} end={9000} duration={2.5}/>
                                 <span>+</span>
                             </span>
-                            <span>Premium</span>
+                            <span>Homes</span>
                         </div>
 
                         <div className="flexColStart stat">
@@ -60,7 +60,7 @@ const Main = () => {
                     </div>
                 </div>
 
-                <div className="flexCenter hero-right">
+                {/* <div className="flexCenter hero-right">
                     <motion.div 
                         className="image-container"
                         initial={{x:"7rem", opacity:0}}
@@ -72,7 +72,7 @@ const Main = () => {
                     >
                         <img src="./hero-image.png" alt="" />
                     </motion.div>
-                </div>
+                </div> */}
             </div>
         </section>
     </div>

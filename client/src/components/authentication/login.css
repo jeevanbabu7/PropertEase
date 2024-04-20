@@ -1,0 +1,26 @@
+.sign-in {
+    position: relative;
+    top: 5rem;
+}
+
+.signin-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 30rem;
+    gap: 2rem;
+    text-align: center;
+}
+
+.signin-container > input {
+    height: 2rem;
+    text-indent: .8rem;
+}
+
+.sign-in-btn {
+    background-color: rgb(67, 72, 76);
+    height: 2rem;
+    border: none;
+    border-radius: 5px;
+    color: white;
+}

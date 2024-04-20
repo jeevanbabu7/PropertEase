@@ -4,9 +4,11 @@ import Comapanies from "../companies/companies"
 import Residencies from "../residencies/residencies"
 import Value from "../value/value"
 import Contact from "../contact/contact"
-// import FAQ from "../FAQ/FAQ"
+import FAQ from "../FAQ/FAQ"
 import Footer from "../footer/footer"
 import GetStarted from "../GetStarted/getStarted"
+import Feedback from "../feedback/feedback"
+import Testimonials from "../testimonials/testimonials"
 
 const Home = () => {
 
@@ -26,7 +28,9 @@ const Home = () => {
                 <Residencies />
                 <Value />
                 <Contact />
-                {/* <FAQ /> */}
+                <Testimonials />
+                <FAQ />
+                {/* <Feedback /> */}
                 <GetStarted />
                 <Footer />
 

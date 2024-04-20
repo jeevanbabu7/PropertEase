@@ -1,11 +1,159 @@
-import React from 'react'
+import React, { useState } from "react"
+import { Link,useNavigate } from "react-router-dom"
+import { 
+  TextField,
+  FormControl,
+  FormControlLabel,
+  InputAdornment,
+  InputLabel,
+  OutlinedInput,
+  IconButton,
+  Button
 
+} from '@mui/material'
+import {
+  RestartAltSharp,
+Visibility ,
+VisibilityOff
+}
+from '@mui/icons-material'
+import './signup.css'
 const SignUp = () => {
+
+  const navigate = useNavigate();
+  const [formData,setFormData] = useState({});
+  const [error, setError] = useState(null);
+
+  const handleChange = (e) => {
+    console.log(formData);
+    setFormData((prevData) => {
+      return {...prevData , [e.target.id]: e.target.value }
+    })
+  }
+
+  const handleSubmit = async (e) => {
+    // e.preventDefault()
+    formData['fullname'] = formData.username;
+    const {password2,...rest} = formData;
+    if(formData.password != formData.password2) {
+      alert("Password do not match...");
+      return;
+    }
+
+    console.log(rest);
+    try {
+      const res = await fetch('http://localhost:5000/api/auth/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(rest),
+      });
+      const data = await res.json();
+      // if (data.success === false) {
+      //   setError(data.message);
+      //   return;
+      // }
+
+      setError(null);
+      navigate('/sign-in');
+    }
+    catch(err) {
+      console.log(err);
+      setError(err.message)
+    }
+  
+  }
+
+  const [showPassword,setShowPassword] = useState(false);
+  const [showConfirmPassword,setShowConfirmPassword] = useState(false);
+
+
+  const handleClickShowPassword = (e) => setShowPassword(prevState => !prevState);
+  const handleClickShowConfirmPassword = (e) => setShowConfirmPassword(prevState => !prevState);
+
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
   return (
-    <div>
-      This is sign up page.
-    </div>
+    <section className="flexColCenter sign-up">
+      <form>
+        <div className="innerWidth paddings signup-container">
+          <h2>Sign Up</h2>
+          <TextField 
+                
+                label="Name" 
+                variant="outlined" 
+                id="username"
+                onChange={handleChange}
+                
+            />
+          <TextField 
+                
+                label="Email" 
+                variant="outlined" 
+                id="email"
+                onChange={handleChange}
+                
+            />
+        <FormControl variant="outlined">
+                        <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+                        <OutlinedInput
+                          id="password"
+                          onChange={handleChange}
+                          type={showPassword ? 'text' : 'password'}
+                          endAdornment={
+                            <InputAdornment position="end">
+                              <IconButton
+                                aria-label="toggle password visibility"
+                                onClick={handleClickShowPassword}
+                                onMouseDown={handleMouseDownPassword}
+                                edge="end"
+                              >
+                                {showPassword ? <VisibilityOff /> : <Visibility />}
+                              </IconButton>
+                            </InputAdornment>
+                          }
+                          label="Password"
+                        />
+        </FormControl>
+        <FormControl variant="outlined">
+                      <InputLabel htmlFor="outlined-adornment-password">Confirm Password</InputLabel>
+                        <OutlinedInput
+                          id="password2"
+                          onChange={handleChange}
+                          type={showConfirmPassword ? 'text' : 'password'}
+                          endAdornment={
+                            <InputAdornment position="end">
+                              <IconButton
+                                aria-label="toggle password visibility"
+                                onClick={handleClickShowConfirmPassword}
+                                onMouseDown={handleMouseDownPassword}
+                                edge="end"
+                              >
+                                {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
+                              </IconButton>
+                            </InputAdornment>
+                          }
+                          label="Confirm Password"
+                        />
+        </FormControl>
+
+        <Button variant="contained" onClick={handleSubmit}>Sign up</Button>
+        </div>
+        
+      </form>
+      <div className="c-log-in">
+        <p>Have an account?</p>
+        <Link to='/sign-in'>
+          <span className="secondaryText ">Sign in</span>
+        </Link>
+        {error && <p className='text-red-500 mt-5'>{error}</p>}
+      </div>
+    </section>
   )
 }
 
 export default SignUp
+

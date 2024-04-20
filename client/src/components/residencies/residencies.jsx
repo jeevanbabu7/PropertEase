@@ -7,7 +7,7 @@ import { sliderSettings } from '../../utils/common.js'
 
 const Residencies = () => {
   return (
-    <section className="r-wrapper" id="residencies">
+    <section className="r-wrapper" id="properties">
 
         <div className="paddings innerWidth r-container">
             <div className="r-head flexColStart">
