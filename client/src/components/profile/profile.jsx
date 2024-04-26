@@ -27,7 +27,7 @@
     import { updateUserStart,updateUserSuccess,updateUserFailure } from '../../redux/user/userSlice.js'
     import './profile.css'
     const Profile = () => { 
-        const {currentUser} = useSelector(state => state.user)
+        const {currentUser, loading} = useSelector(state => state.user)
         const navigate = useNavigate();
         const dispatch = useDispatch();
 
@@ -91,7 +91,7 @@
         const handleSubmit = async (e) => {
             e.preventDefault();
             try {
-                const res = await fetch(`http://localhost:5000/api/user/update/${currentUser._id}`, {
+                const res = await fetch(`/api/user/update/${currentUser._id}`, {
                     method: 'POST',
                     headers:{
                         'Content-Type': 'application/json',
@@ -110,6 +110,7 @@
                 }
         
                 dispatch(updateUserSuccess(data));
+                
             } catch (err) {
                 console.error('Error:', err);
             }
@@ -165,9 +166,9 @@
                                 ): ""
                             )}</p>
                         <TextField
-                            id="fullname"
+                            id="username"
                             label="Name"
-                            defaultValue={userData.fullname}
+                            defaultValue={userData.username}
                             sx={boxStyles}
                             onChange={handleChange}
                             />
@@ -212,7 +213,7 @@
                                     
                                     onClick={handleSubmit}
                         
-                                >UPDATE</Button>
+                                >{loading ? 'loading..': "UPDATE"}</Button>
                             
                         <Box 
                             sx={{

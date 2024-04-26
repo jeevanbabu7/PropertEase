@@ -5,14 +5,6 @@ import userRouter from './routes/user.route.js';
 import authRouter from './routes/auth.route.js';
 import cors from 'cors' // imppppppppp
 import cookieParser from 'cookie-parser';
-
-const port = 5000;
-const app = express()
-app.use(cookieParser()) // use cookie for authentication
-app.use(express.json())
-app.use(cors()) // important
-
-
 dotenv.config(); 
 mongoose.connect(process.env.MONGO_URL)
     .then(() => {
@@ -20,6 +12,17 @@ mongoose.connect(process.env.MONGO_URL)
     }).catch((err) => {
         console.log(err);
     })
+
+const port = 5000;
+const app = express()
+app.use(cookieParser()) // use cookie for authentication
+app.use(express.json())
+app.use(cors()) // important
+
+app.listen(port ,() => {
+    console.log("Server is listening on port ",port);
+})    
+
 
 
 app.use('/api/user',userRouter)
@@ -37,6 +40,4 @@ app.use((err,req,res,next) => {
 })
 
  
-app.listen(port ,() => {
-    console.log("Server is listening on port ",port);
-})         
+     
