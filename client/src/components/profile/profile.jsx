@@ -1,159 +1,247 @@
-import React, { useEffect, useState } from 'react'
-import { Grid } from '@mui/material'
-import {Box,TextField,Button,Alert} from '@mui/material'
-import { useRef } from 'react'
-import app from '../../firebase.js'
-import {getDownloadURL, getStorage,ref,uploadBytes,uploadBytesResumable} from 'firebase/storage'
-import './profile.css'
-const Profile = () => {
-    const boxStyles = {
-        width:"20rem"
+    import React, { useEffect, useState } from 'react'
+    import { useNavigate } from 'react-router-dom'
+    import { Grid } from '@mui/material'
+    import {
+        Box,
+        TextField,
+        Alert,    
+        FormControl,
+        InputAdornment,
+        InputLabel,
+        OutlinedInput,
+        IconButton,
+        Button,
+        Divider
+    } from '@mui/material'
+    import {
+        RestartAltSharp,
+    Visibility ,
+    VisibilityOff
     }
+    from '@mui/icons-material'
 
-    const [userData,setUserDate] = useState({
-        username: "",
-        email: "",
-        
-    });
+    import { useRef } from 'react'
+    import app from '../../firebase.js'
+    import {getDownloadURL, getStorage,ref,uploadBytes,uploadBytesResumable} from 'firebase/storage'
+    import {useSelector,useDispatch} from "react-redux"
+    import { updateUserStart,updateUserSuccess,updateUserFailure } from '../../redux/user/userSlice.js'
+    import './profile.css'
+    const Profile = () => { 
+        const {currentUser} = useSelector(state => state.user)
+        const navigate = useNavigate();
+        const dispatch = useDispatch();
 
-    const [formData,setFormData] = useState({
-        name: "Full Name",
-        email: "Email",
-        password: "Password"
-    });
-    const fileRef = useRef(null);
-    const [file,setFile] = useState(undefined)
-    const [filePerc,setFilePerc] = useState(0) 
-    const [fileUploadError,setFileUplodError] = useState(false) 
-
-    console.log(file);
-    // profile photo handler
-
-    const handleProfileUpload = (e) => {
-        setFile((prevState) => e.target.files[0]);
-       
-    }
-
-    const handleFileUpload = (file) => {
-        const storage = getStorage(app) // create a storage for firebase app
-        const fileName = new Date().getTime() +  file.name; // handling the case when files have same name by adding current time in front of file name
-
-        const storageRef = ref(storage,fileName)
-        const uploadTask = uploadBytesResumable(storageRef,file)
-
-        uploadTask.on('state_changed', (snapshot) => {
-            const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-            setFilePerc(Math.round(progress)); 
-            console.log(filePerc);
-        },
-        (error) => {
-            setFileUplodError(prevState => true);
-        },
-        () => {
-            getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-                setFormData({...FormData,avatar: downloadURL})
-                console.log(formData);
-            });
+        const boxStyles = {
+            width:"20rem"
         }
+
+        // password Field
+        const handleMouseDownPassword = (event) => {
+            event.preventDefault();
+        };
+        const [showPassword,setShowPassword] = useState(false);
+        const handleClickShowPassword = (e) => setShowPassword(prevState => !prevState);
+
+        const [userData,setuserData] = useState(currentUser);
+        const fileRef = useRef(null);
+        const [file,setFile] = useState(undefined)
+        const [filePerc,setFilePerc] = useState(0) 
+        const [fileUploadError,setFileUplodError] = useState(false) 
+
+        // console.log(file);
+        // profile photo handler
+
+        const handleProfileUpload = (e) => {
+            setFile((prevState) => e.target.files[0]);
         
-        );
-    }
-
-    // whenever user upload new photo it will be updated in the firestore. 
-    useEffect(() => {
-        if(file) {
-            handleFileUpload(file);
         }
-    },[file]);
 
-    return (
-    <section className="profile-container">
-            
-        <Grid container spacing={2}>
-            <Grid item xs={12} md={5}>
-                <Box
-                    display="flex"
-                    flexDirection='column'
-                    justifyContent='center'
-                    alignItems='center'
-                    gap={3}
-                >
-                    <Box
-                        width="18rem"
-                        display={"flex"}
-                        justifyContent="center"
-                        alignItems="center"
-                        gap={2}
-                        marginTop="2.5rem"
-     
-                    >   <input type="file" ref={fileRef} hidden accept='image/*' onClick={handleProfileUpload}/>
-                        <img 
-                            src={formData.avatar || "https://lh3.googleusercontent.com/a/ACg8ocJ5z5YTE6kYYfj21tJJo_hytISefYsDEMoXJ489Ru3u6pq65Q=s96-c"} alt="Profile" className='profile--img' onClick={(e) => fileRef.current.click()}/>
+        const handleFileUpload = (file) => {
+            const storage = getStorage(app);
+            const fileName = new Date().getTime() + file.name;
+            const storageRef = ref(storage, fileName);
+            const uploadTask = uploadBytesResumable(storageRef, file);
+        
+            uploadTask.on(
+            'state_changed',
+            (snapshot) => {
+                const progress =
+                (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                setFilePerc(Math.round(progress));
+            },
+            (error) => {
+                setFileUploadError(true);
+            },
+            () => {
+                getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) =>
+                setuserData({ ...userData, avatar: downloadURL })
+                );
+            }
+            );
+        }
 
-                        
-
-                        <div className="userid--box">
-                            <p>UserID : </p>
-                            <p>Score : </p>
-                        </div>
-                    
-                    </Box>
-                    <p>{ fileUploadError ? (<span>Image upload error</span>
-                        ):((filePerc > 0 && filePerc < 100) ? (
-                                <span>Uploading</span>
-                            ): filePerc == 100 ? (
-                                <Alert severity="success">Profile photo updated successfully.</Alert>
-
-                            ): ""
-                        )}</p>
-                    <TextField
-                        id="outlined-required"
-                        label="Name"
-                        defaultValue="Full Name"
-                        sx={boxStyles}
-                        />
-                    <TextField
-                        id="outlined-required"
-                        label="Email"
-                        defaultValue="Email"
-                        sx={boxStyles}
-                    />
-
-                    <TextField
-                        id="outlined-required"
-                        label="Password"
-                        defaultValue="Password"
-                        sx={boxStyles}
-                    />
-
-                        <Button variant='contained' color="success" sx={{
-                            ...boxStyles,
-                            
-                        }}>UPDATE</Button>
-                    <Box 
-                        sx={{
-                            ...boxStyles
-                        }}
-
-                        display="flex"
-                        justifyContent="space-between"
-                    >
-                        <a href="">
-                        <p className='text--danger'>Delete Account</p>
-                        </a>
-                        <a href=""><p className='text--danger'>Log Out</p></a>
-                    </Box>
-                    </Box>
-
-            </Grid>
-            <Grid item xs={12} md={7} sx={{
-            }}>
+        const handleChange = (e) => {
+            setuserData(prevState => {
+                return {...prevState , [e.target.id]: e.target.value};
                 
+            })
+            console.log(userData);
+            
+        }
+        const handleSubmit = async (e) => {
+            e.preventDefault();
+            try {
+                const res = await fetch(`http://localhost:5000/api/user/update/${currentUser._id}`, {
+                    method: 'POST',
+                    headers:{
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(userData)
+                });
+        
+                if (!res.ok) {
+                    throw new Error('Network response was not ok');
+                }
+        
+                const data = await res.json();
+                if (data.success === false) {
+                    dispatch(updateUserFailure());
+                    return;
+                }
+        
+                dispatch(updateUserSuccess(data));
+            } catch (err) {
+                console.error('Error:', err);
+            }
+        };
+        
+        // whenever user upload new photo it will be updated in the firestore. 
+        useEffect(() => {
+            if(file) {
+                handleFileUpload(file);
+            }
+        },[file]);
+
+
+
+        return (
+        <section className="profile-container">
+                
+            <Grid container spacing={2}>
+                <Grid item xs={12} md={5}>
+                    <Box
+                        display="flex"
+                        flexDirection='column'
+                        justifyContent='center'
+                        alignItems='center'
+                        gap={3}
+                    >
+                        <Box
+                            width="18rem"
+                            display={"flex"}
+                            justifyContent="center"
+                            alignItems="center"
+                            gap={2}
+                            marginTop="2.5rem"
+        
+                        >   <input type="file" ref={fileRef} hidden accept='image/*' onClick={handleProfileUpload}/>
+                            <img 
+                                src={userData.avatar || "https://lh3.googleusercontent.com/a/ACg8ocJ5z5YTE6kYYfj21tJJo_hytISefYsDEMoXJ489Ru3u6pq65Q=s96-c"} alt="Profile" className='profile--img' onClick={(e) => fileRef.current.click()}/>
+
+                            
+
+                            <div className="userid--box">
+                                <p>UserID : {userData.username}</p>
+                                <p>Score : </p>
+                            </div>
+                        
+                        </Box>
+                        <p>{ fileUploadError ? (<span>Image upload error</span>
+                            ):((filePerc > 0 && filePerc < 100) ? (
+                                    <span>Uploading</span>
+                                ): filePerc == 100 ? (
+                                    <Alert severity="success">Profile photo updated successfully.</Alert>
+
+                                ): ""
+                            )}</p>
+                        <TextField
+                            id="fullname"
+                            label="Name"
+                            defaultValue={userData.fullname}
+                            sx={boxStyles}
+                            onChange={handleChange}
+                            />
+                        <TextField
+                            id="email"
+                            label="Email"
+                            defaultValue={userData.email}
+                            sx={boxStyles}
+                            onChange={handleChange}
+                            
+                        />
+
+                        <FormControl variant="outlined" sx={boxStyles}>
+                            <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+                            <OutlinedInput
+                            id="password"
+                            onChange={handleChange}
+                            type={showPassword ? 'text' : 'password'}
+                            defaultValue={userData.password}
+                            endAdornment={
+                                <InputAdornment position="end">
+                                <IconButton
+                                    aria-label="toggle password visibility"
+                                    onClick={handleClickShowPassword}
+                                    onMouseDown={handleMouseDownPassword}
+                                    edge="end"
+                                >
+                                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                                </IconButton>
+                                </InputAdornment>
+                            }
+                            label="Password"
+                            />
+                        </FormControl>
+
+                            
+                                <Button 
+                                    variant='contained' color="success" sx={{
+                                    ...boxStyles,
+                                    
+                                    }}
+                                    
+                                    onClick={handleSubmit}
+                        
+                                >UPDATE</Button>
+                            
+                        <Box 
+                            sx={{
+                                ...boxStyles
+                            }}
+
+                            display="flex"
+                            justifyContent="space-between"
+                        >
+                            <a href="">
+                            <p className='text--danger'>Delete Account</p>
+                            </a>
+                            <a href=""><p className='text--danger'>Log Out</p></a>
+                        </Box>
+                        </Box>
+                    {/* <Divider orientation='vertical' textAlign='left' sx={{
+                        position: 'absolute' , 
+                        left: "30rem",
+                        top: '0'
+                    }}/> */}
+                </Grid>
+                <Grid item xs={12} md={7} sx={{
+                }}>
+                    
+                </Grid>
             </Grid>
-        </Grid>
 
-    </section>
-  )
-}
+        </section>
+    )
+    }
 
-export default Profile
+    export default Profile

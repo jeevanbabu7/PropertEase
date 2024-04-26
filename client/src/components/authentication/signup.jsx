@@ -3,7 +3,6 @@ import { Link,useNavigate } from "react-router-dom"
 import { 
   TextField,
   FormControl,
-  FormControlLabel,
   InputAdornment,
   InputLabel,
   OutlinedInput,
@@ -33,14 +32,14 @@ const SignUp = () => {
 
   const handleSubmit = async (e) => {
     // e.preventDefault()
-    formData['fullname'] = formData.username;
+    console.log(formData);
     const {password2,...rest} = formData;
     if(formData.password != formData.password2) {
       alert("Password do not match...");
       return;
     }
 
-    console.log(rest);
+
     try {
       const res = await fetch('http://localhost:5000/api/auth/signup', {
         method: 'POST',

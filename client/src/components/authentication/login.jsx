@@ -43,7 +43,7 @@ const Login = () => {
     e.preventDefault()
     try {
      
-      const res = await fetch('api/auth/signin', {
+      const res = await fetch('http://localhost:5000/api/auth/signin', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -55,7 +55,7 @@ const Login = () => {
    
 
       dispatch(signInSuccess(data))
-      navigate('/Dashboard');
+      navigate('/profile');
     }
     catch(err) {
       dispatch(signInFailure(err.message));
@@ -71,7 +71,7 @@ const Login = () => {
   };
 
   const inputStyles = {
-
+    
   };
 
   return (

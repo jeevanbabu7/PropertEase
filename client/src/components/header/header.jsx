@@ -81,9 +81,11 @@ function AccountMenu({imgUrl}) {
           transformOrigin={{ horizontal: 'right', vertical: 'top' }}
           anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
         >
-          <MenuItem onClick={handleClose}>
-            <Avatar /> Profile
-          </MenuItem>
+          <Link to='/profile'>
+            <MenuItem onClick={handleClose}>
+              <Avatar /> Profile
+            </MenuItem>
+          </Link>
           <Divider />
           <MenuItem onClick={handleClose}>
             <ListItemIcon>
