@@ -1,0 +1,37 @@
+.property-form{
+    margin-top: 5.5rem;
+    /* background-color: aqua; */
+    text-align: center;
+    margin-bottom: 2rem;
+    
+}
+.property-left-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+   
+  
+}
+
+.input--item > input {
+    width: 4rem;
+    height: 2rem;
+    margin: .5rem;
+}
+
+.room-details {
+    display: flex;
+    justify-content: start;
+    gap: 2.5rem;
+    
+}
+
+
+.image--text {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 0.4rem;
+    margin-bottom: 1rem;
+}

@@ -1,5 +1,5 @@
     import React, { useEffect, useState } from 'react'
-    import { useNavigate } from 'react-router-dom'
+    import { useNavigate,Link } from 'react-router-dom'
     import { Grid } from '@mui/material'
     import {
         Box,
@@ -258,15 +258,28 @@
                         </FormControl>
 
                             
-                                <Button 
-                                    variant='contained' color="success" sx={{
-                                    ...boxStyles,
-                                    
+                                <Box 
+                                    sx={{
+                                        display:"flex",
+                                        flexDirection: 'column',
+                                        gap:".6rem"
                                     }}
-                                    
-                                    onClick={handleSubmit}
-                        
-                                >{loading ? 'loading..': "UPDATE"}</Button>
+                                >
+                                    <Button 
+                                        variant='contained' color="success" sx={{
+                                        ...boxStyles,
+                                        
+                                        }}
+                                        
+                                        onClick={handleSubmit}
+                            
+                                    >{loading ? 'loading..': "UPDATE"}</Button>
+
+                                    <Button 
+                                        variant='outlined'
+                                        sx={boxStyles}
+                                    ><Link to='/newproperty'>Add property</Link></Button>
+                                </Box>
                             
                         <Box 
                             sx={{

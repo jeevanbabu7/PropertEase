@@ -8,6 +8,7 @@ import './index.css'
 import Dashboard from './components/dashboard/dashboard'
 import Properties from './components/properties/properties'
 import Profile from './components/profile/profile'
+import PropertyForm from './components/Listing/PropertyForm'
 
 function App() {
 
@@ -21,8 +22,11 @@ function App() {
           <Route path='/sign-in' element={<Login />}/>
           <Route path='/dashboard' element={<Dashboard />}/>
           <Route path='/properties' element={<Properties />}/>
+          {/* <Route element={<PrivateRoute />}>
+
+          </Route> */}
           <Route path='/profile' element={<Profile />}/>
-          
+          <Route path='/newproperty' element={<PropertyForm/>}/>
         </Routes>
       </Router>
 
