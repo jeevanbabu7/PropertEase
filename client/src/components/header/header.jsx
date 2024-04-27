@@ -105,6 +105,8 @@ function AccountMenu({imgUrl}) {
   }
 
 const Header = () => {
+      // For the conditional rendering of profile photo
+      const { currentUser } = useSelector(state => state.user);
     const [menuOpen, setMenuOpen] = useState(false);
 
     const toggleMenu = () => {
@@ -121,8 +123,8 @@ const Header = () => {
         return { right: !menuOpen && "-200%" };
     };
 
-    // For the conditional rendering of profile photo
-    const { currentUser } = useSelector(state => state.user);
+
+
 
 
     return (
@@ -136,7 +138,7 @@ const Header = () => {
                         <a href="#contact">Contact Us</a>
                         <a href="#FAQ">FAQ</a>
                         
-                        {currentUser ? (
+                        {currentUser != null ? (
                             <AccountMenu imgUrl={currentUser.avatar}/>
                         ):(
                             <Link to='/sign-in'>                        

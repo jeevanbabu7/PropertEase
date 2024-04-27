@@ -24,12 +24,24 @@
     import app from '../../firebase.js'
     import {getDownloadURL, getStorage,ref,uploadBytes,uploadBytesResumable} from 'firebase/storage'
     import {useSelector,useDispatch} from "react-redux"
-    import { updateUserStart,updateUserSuccess,updateUserFailure } from '../../redux/user/userSlice.js'
+    import { 
+        updateUserStart,
+        updateUserSuccess,
+        updateUserFailure,
+        deleteUserStart,
+        deleteUserSuccess,
+        deleteUserFailure,
+        signOutUserStart,
+        signOutUserFailure,
+        signOutUserSuccess,
+        signInFailure
+     } from '../../redux/user/userSlice.js'
     import './profile.css'
     const Profile = () => { 
         const {currentUser, loading} = useSelector(state => state.user)
         const navigate = useNavigate();
         const dispatch = useDispatch();
+        console.log(currentUser);
 
         const boxStyles = {
             width:"20rem"
@@ -116,6 +128,47 @@
             }
         };
         
+       
+        const handleDeleteUser = async (e) => {
+            e.preventDefault();
+            try {
+                dispatch(deleteUserStart());
+                const res = await fetch(`/api/user/delete/${currentUser._id}`, {
+                    method: 'DELETE',
+                });
+
+                const data = await res.json();
+                if (data.success === false) {
+                    dispatch(deleteUserFailure(data.message));
+                    return;
+                }
+                dispatch(deleteUserSuccess(data));
+                navigate('/')
+                console.log("user deleted...");
+
+            } catch (error) {
+             dispatch(deleteUserFailure(error.message));
+            }
+            
+        };
+
+        const handleSignOUt = async (e) => {
+            e.preventDefault();
+            try {
+                dispatch(signOutUserStart())
+                 const res = await fetch('/api/auth/signout')
+                 const data = await res.json();
+                 if(data.success == false) {
+                    return;
+                 }
+                 dispatch(signOutUserSuccess(data))
+                 navigate('/')
+                 console.log("Sign out successfull..");
+            }catch(err) {
+                dispatch(signOutUserFailure(err.message))
+            }
+        }
+
         // whenever user upload new photo it will be updated in the firestore. 
         useEffect(() => {
             if(file) {
@@ -223,10 +276,10 @@
                             display="flex"
                             justifyContent="space-between"
                         >
-                            <a href="">
+                            <a href="/" onClick={handleDeleteUser}>
                             <p className='text--danger'>Delete Account</p>
                             </a>
-                            <a href=""><p className='text--danger'>Log Out</p></a>
+                            <a href="" onClick={handleSignOUt}><p className='text--danger'>Log Out</p></a>
                         </Box>
                         </Box>
                     {/* <Divider orientation='vertical' textAlign='left' sx={{
