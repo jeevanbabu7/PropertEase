@@ -35,3 +35,13 @@
     gap: 0.4rem;
     margin-bottom: 1rem;
 }
+
+
+.image--item {
+    margin-top: 1.6rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    gap: 0rem;
+}

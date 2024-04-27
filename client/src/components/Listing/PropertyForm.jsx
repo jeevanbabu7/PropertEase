@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Grid, TextField,Box,Checkbox,FormControlLabel,Button} from '@mui/material'
 import './PropertyForm.css'
+import { getDownloadURL, getStorage, uploadBytesResumable,ref } from 'firebase/storage'
 
-
+import app from '../../firebase.js'
 const PropertyForm = () => {
 
     const inputStyles = {
@@ -11,10 +12,82 @@ const PropertyForm = () => {
         minWidth: '15rem'
     }
 
-  return (
+    const [files,setFiles] = useState([]);
+    const [formData, setFormData] = useState({
+        imageUrls: [],
+        name: '',
+        description: '',
+        address: '',
+        type: 'rent',
+        bedrooms: 1.
+        bathrooms: 1,
+        regular
+
+
+    })
+    const [uploading,setUploading] = useState(false);
+
+    console.log(formData);
+    const storeImage = async (file) => {
+        return new Promise((resolve ,reject) => {
+            const storage = getStorage(app);
+            const fileName = new Date().getTime() + file.name;
+            const storageRef = ref(storage,fileName);
+            const uploadTask = uploadBytesResumable(storageRef,file)
+            
+            uploadTask.on(
+                "state_changed",
+                (snapshot) => {
+                    const progress = snapshot.bytesTransferred / snapshot.totalBytes;
+                    
+                },
+                (error) => {
+                    reject(error)
+                },
+                () => {
+                    getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                        console.log(downloadURL)
+                        resolve(downloadURL)
+                    });
+                }
+            )
+        })
+    }
+
+    const handleImageSubmit = (e) => {
+        if(files.length > 0 && files.length < 7) {
+                setUploading(true);
+                const promises = [];
+                for(let i = 0;i<files.length ;++i) {
+                    promises.push(storeImage(files[i]));
+                }
+                Promise.all(promises).then(urls => {
+                    console.log(urls);
+                    setFormData({...formData,imageUrls: urls })
+                })
+
+                setUploading(false);
+        }
+    }
+
+    const handleRemoveImage = (index) => {
+        setFormData({
+            ...formData,
+            imageUrls: formData.imageUrls.filter((url,ind) => {
+                return ind != index;
+            })
+        })
+    }
+
+    useEffect(() => {
+        console.log(files);
+    },[files]);
+    return (
     <section className="property-form">
         <h1>New property</h1>
-        <Grid container spacing={2}>
+        <Grid container spacing={2} sx={{
+            marginTop: "2rem"
+        }}>
             <Grid item xs={12} md={6} 
                 sx={{
                     display: 'flex',
@@ -57,7 +130,10 @@ const PropertyForm = () => {
 
                     <Box
                         sx={{
-                            
+                          
+                          display: 'flex',
+                          flexDirection: 'column',
+                          alignItems: 'start'
                         }}
                     >
                         <div>
@@ -91,13 +167,41 @@ const PropertyForm = () => {
                         <span>The first image will be the cover (max 6)</span>
                 </div>
                 <div className="image--input">
-                    <input type="file" id='images' accept='images/*' multiple/>
+                <input 
+                    type="file"      
+                    id='images' 
+                    accept='images/*' 
+                    multiple
+                    onChange={(e) => {
+                        
+                        setFiles(e.target.files);  // Update files with selected files
+                        
+                    }}
+                />
 
                     <Button 
                         variant='contained'
                         color='secondary'
-                    >Upload</Button>
+                        onClick={handleImageSubmit}
+                        disabled={uploading}
+                    >{uploading ? "Uploading..":"Upload"}</Button>
                 </div>
+
+                {/* <div className="image--container"> */}
+                    {
+                        formData.imageUrls.length > 0 && formData.imageUrls.map((url,index) => {
+                            return (<div className="image--item" key={index}>
+                                <img src={url} alt="hii" style={{
+                                height: "100px",
+                                width:'100px'
+                            }}/>
+
+                            <Button variant='outlined' color='error' onClick={() => handleRemoveImage(index)}>Delete</Button>
+                            
+                            </div>)
+                        })
+                    }
+                {/* </div> */}
 
                 <Button 
                     variant='contained'
