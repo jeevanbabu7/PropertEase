@@ -1,17 +1,20 @@
 import React, { useEffect, useState } from 'react'
-import { Grid, TextField,Box,Checkbox,FormControlLabel,Button} from '@mui/material'
+import {useNavigate} from 'react-router-dom'
+import { Grid, TextField,Box,Checkbox,FormControlLabel,Button,Backdrop,CircularProgress} from '@mui/material'
 import './PropertyForm.css'
 import { getDownloadURL, getStorage, uploadBytesResumable,ref } from 'firebase/storage'
 
 import app from '../../firebase.js'
+import { useSelector } from 'react-redux'
 const PropertyForm = () => {
-
+    const {currentUser} = useSelector(state => state.user);
     const inputStyles = {
         width:'23rem',
         maxWidth: '35rem',
         minWidth: '15rem'
     }
 
+    const navigate = useNavigate()
     const [files,setFiles] = useState([]);
     const [formData, setFormData] = useState({
         imageUrls: [],
@@ -19,12 +22,18 @@ const PropertyForm = () => {
         description: '',
         address: '',
         type: 'rent',
-        bedrooms: 1.
+        bedrooms: 1,
         bathrooms: 1,
-        regular
+        price: 0,
+        discountPrice: 0,
+        offer: false,
+        parking: false,
+        furnished: false 
+    });
+
+    const [open, setOpen] = React.useState(false);
 
 
-    })
     const [uploading,setUploading] = useState(false);
 
     console.log(formData);
@@ -55,18 +64,25 @@ const PropertyForm = () => {
     }
 
     const handleImageSubmit = (e) => {
+        
+        console.log("hiii");
         if(files.length > 0 && files.length < 7) {
-                setUploading(true);
+               
+                
                 const promises = [];
                 for(let i = 0;i<files.length ;++i) {
                     promises.push(storeImage(files[i]));
                 }
                 Promise.all(promises).then(urls => {
-                    console.log(urls);
-                    setFormData({...formData,imageUrls: urls })
+                    setOpen(false)
+                    setFormData({...formData,
+                        imageUrls: urls
+                    })
+                    console.log(formData)
                 })
 
-                setUploading(false);
+               
+                
         }
     }
 
@@ -79,11 +95,65 @@ const PropertyForm = () => {
         })
     }
 
+    const handleChange = (e) => {
+
+        const {id , value} = e.target;
+        if(id == "parking" || id == 'furnished' || id == 'offer') {
+            setFormData((prevData) => {
+                return {...prevData , [id]: e.target.checked};
+            })
+        }
+        else {
+            setFormData((prevData) => {
+
+                return {...prevData , [id]: value};
+            })
+        }
+    }
+
+    const handleSubmit = async (e) => {
+
+        try {
+            setOpen(true)
+            const res = await fetch('/api/listing/create',{
+                method: 'POST',
+                headers: {
+                    'Content-Type':'application/json'
+                },
+                body: JSON.stringify({
+                    ...formData,
+                    userRef: currentUser._id,
+                    
+                })
+            })
+            
+            const data = await res.json();
+            if(data.success == false) {
+                console.log("Error in creating property");
+                return;
+            }
+            setOpen(false)
+            navigate(`/newproperty/${data._id}`)
+        }catch(err) {
+            
+        }
+    }
+    
     useEffect(() => {
         console.log(files);
     },[files]);
+
+    console.log(open)
+
     return (
     <section className="property-form">
+        <Backdrop
+            sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+            open={open}
+            
+        >
+            <CircularProgress color="inherit" />
+        </Backdrop>
         <h1>New property</h1>
         <Grid container spacing={2} sx={{
             marginTop: "2rem"
@@ -111,21 +181,30 @@ const PropertyForm = () => {
                 >
                     <TextField 
                         label="Name"
+                        id="name"
                         variant='filled'
                         sx={inputStyles}
+                        onChange={handleChange}
+                        value={formData.name}
                     />
 
                     <TextField
                         label='Description'
+                        id='description'
                         multiline
                         variant='filled'
                         rows={4}
                         sx={inputStyles}
+                        onChange={handleChange}
+                        value={formData.description}
                     />
                     <TextField 
                         label="Address"
+                        id='address'
                         variant='filled'
                         sx={inputStyles}
+                        onChange={handleChange}
+                        value={formData.address}
                     />
 
                     <Box
@@ -137,26 +216,37 @@ const PropertyForm = () => {
                         }}
                     >
                         <div>
-                            <FormControlLabel  required control={<Checkbox />} label="Sell" />
-                            <FormControlLabel  required control={<Checkbox />} label="Rent" />
-                            <FormControlLabel  required  control={<Checkbox />} label="Parking Spot" />
-                            <FormControlLabel  required  control={<Checkbox />} label="Furnshed" />
-                            <FormControlLabel  required  control={<Checkbox />} label="Offer" />
+                            {/* <FormControlLabel  required control={<Checkbox onChange={handleChange} checked={formData.sell}/>} label="sell" /> */}
+                            {/* <FormControlLabel  required control={<Checkbox onChange={handleChange} checked={formData.type == 'rent'}/>} label="Rent" /> */}
+                            <FormControlLabel  required  control={<Checkbox onChange={handleChange} checked={formData.parking == 'parking'} id="parking"/>} label="Parking Spot" />
+                            <FormControlLabel  required  control={<Checkbox id='furnished' onChange={handleChange} checked={formData.furnished}/>} label="Furnished" />
+                            <FormControlLabel  required  control={<Checkbox id='offer' onChange={handleChange} checked={formData.offer}/>} label="Offer" />
                         </div>
                         <div className='room-details' >
                             <div className="input--item">
-                                <input type="number" id='beds' required  defaultValue={0}/>
-                                <label htmlFor="beds" >Beds</label>
+                                <input type="number" id='bedrooms' required  defaultValue={0}
+                                
+                                onChange={handleChange}
+                                value={formData.bedrooms}
+                                />
+                                <label htmlFor="bedrooms" >Beds</label>
                             </div>
                             <div className="input--item">
-                                <input type="number" id='baths' required  defaultValue={0}/>
-                                <label htmlFor="baths" >Baths</label>
+                                <input type="number" id='bathrooms' required  
+                                onChange={handleChange}
+                                value={formData.bathrooms}
+                                />
+                                <label htmlFor="bathrooms" >Baths</label>
                             </div>
                         </div>
                         <div className="input--item  input--item--price">
-                                <input type="number" id='price' required  defaultValue={0}/>
+                                <input type="number" id='price' required  
+                                onChange={handleChange}
+                                value={formData.regularPrice}
+                                />
                                 <label htmlFor="price" >Price ($ / month)</label>
                         </div>
+
                     </Box>
                 </div>
                 
@@ -182,7 +272,13 @@ const PropertyForm = () => {
                     <Button 
                         variant='contained'
                         color='secondary'
-                        onClick={handleImageSubmit}
+                        onClick={(e) => {
+                            setOpen(true)
+                            handleImageSubmit(e)
+                            .then(() => setOpen(false)) 
+                            .catch(() => setOpen(false)); 
+                            setOpen(false)
+                        }}
                         disabled={uploading}
                     >{uploading ? "Uploading..":"Upload"}</Button>
                 </div>
@@ -210,6 +306,8 @@ const PropertyForm = () => {
                         width: '25rem',
                         marginTop: "2rem"
                     }}
+
+                    onClick={handleSubmit}
                 >Create listing</Button>
             </Grid>
         </Grid>

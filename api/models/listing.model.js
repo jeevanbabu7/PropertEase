@@ -13,7 +13,7 @@ const listingSchema = new mongoose.Schema({
         type: String ,
         required: true
     },
-    requiredPrice: {
+    price: {
         type: Number,
         required: true
     },
@@ -42,7 +42,7 @@ const listingSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    imgUrls: {
+    imageUrls: {
         type: Array,
         required: true
     },
@@ -52,6 +52,6 @@ const listingSchema = new mongoose.Schema({
     }
 },{timestamps: true})
 
-const Listing = mongoose.model('sListing',listingSchema)
+const Listing = mongoose.model('Listing',listingSchema)
 
 export default Listing;
