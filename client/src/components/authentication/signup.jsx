@@ -16,7 +16,11 @@ Visibility ,
 VisibilityOff
 }
 from '@mui/icons-material'
+import Auth from "./auth"
 import './signup.css'
+
+
+
 const SignUp = () => {
 
   const navigate = useNavigate();
@@ -140,6 +144,7 @@ const SignUp = () => {
         </FormControl>
 
         <Button variant="contained" onClick={handleSubmit}>Sign up</Button>
+        <Auth />
         </div>
         
       </form>

@@ -133,7 +133,7 @@
             e.preventDefault();
             try {
                 dispatch(deleteUserStart());
-                const res = await fetch(`/api/user/delete/${currentUser._id}`, {
+                const res = await fetch(`http://localhost:5000/api/user/delete/${currentUser._id}`, {
                     method: 'DELETE',
                 });
 
@@ -275,10 +275,12 @@
                             
                                     >{loading ? 'loading..': "UPDATE"}</Button>
 
-                                    <Button 
-                                        variant='outlined'
-                                        sx={boxStyles}
-                                    ><Link to='/newproperty'>Add property</Link></Button>
+                                    <Link to='/newproperty'>
+                                        <Button 
+                                            variant='outlined'
+                                            sx={boxStyles}
+                                        >Add property</Button>
+                                    </Link>
                                 </Box>
                             
                         <Box 
