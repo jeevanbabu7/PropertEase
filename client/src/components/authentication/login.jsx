@@ -7,7 +7,8 @@ import {
      InputLabel,
      OutlinedInput,
      IconButton,
-     Button
+     Button,
+     Divider
 
 } from '@mui/material'
 import {
@@ -109,8 +110,9 @@ const Login = () => {
                         />
                       </FormControl>
 
-                
               <Button variant='contained' onClick={handleSubmit}>Sign in</Button>
+
+              <Divider/>
                 <Auth />
               </div>
               

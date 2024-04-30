@@ -18,3 +18,21 @@
     color: rgb(174, 13, 13);
     font-weight: 500;
 }
+.property--container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 4rem;
+    height: 100vh;
+    overflow: auto;
+    padding: 1.5rem;
+    background-color: aliceblue;
+}
+
+.property--container > * {
+    flex-shrink: 0; /* Prevent items from shrinking */
+    width: 15rem;
+    max-height: 23rem;
+    
+}

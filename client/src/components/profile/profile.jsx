@@ -11,14 +11,21 @@
         OutlinedInput,
         IconButton,
         Button,
-        Divider
+        Divider,
+        Card,CardMedia,CardContent,
+        CardActions,
+        Typography 
     } from '@mui/material'
     import {
         RestartAltSharp,
-    Visibility ,
-    VisibilityOff
+        Visibility ,
+        VisibilityOff,
+        
+    
     }
     from '@mui/icons-material'
+    import DeleteIcon from '@mui/icons-material/Delete';
+    import EditIcon from '@mui/icons-material/Edit';
 
     import { useRef } from 'react'
     import app from '../../firebase.js'
@@ -59,6 +66,7 @@
         const [file,setFile] = useState(undefined)
         const [filePerc,setFilePerc] = useState(0) 
         const [fileUploadError,setFileUplodError] = useState(false) 
+        const [propertyList,setPropertyList] = useState([]);
 
         // console.log(file);
         // profile photo handler
@@ -169,10 +177,42 @@
             }
         }
 
+        const handleShowListing = async () => {
+            try {
+                console.log("hiiiiiii");
+                const res = await fetch(`/api/user/listings/${currentUser._id}`);
+                const data = await res.json();
+                setPropertyList(data);
+                console.log(data);
+            }
+            catch(err) {
+
+            }
+
+        }
+        
+        const handlePropertyDelete = async (propertyId) => {
+
+            try {
+                const res = await fetch(`/api/listing/delete/${propertyId}`,{
+                    method: 'DELETE'
+     
+                });
+
+                const data = await res.json(); // masg: successfully deleted.
+                
+                setPropertyList((prev) => prev.filter((property) => property._id != propertyId));
+                console.log(propertyList);
+
+            }catch(err) {
+                console.log(err);
+            }
+        }
         // whenever user upload new photo it will be updated in the firestore. 
         useEffect(() => {
             if(file) {
                 handleFileUpload(file);
+                
             }
         },[file]);
 
@@ -305,6 +345,44 @@
                 </Grid>
                 <Grid item xs={12} md={7} sx={{
                 }}>
+                    <Button variant='outlined' onClick={handleShowListing}>My properties</Button>
+                    
+                        <div className="property--container">
+                        {       propertyList.map((property,index) => {
+
+                                    return (
+                                        
+                                            <Card sx={{ maxWidth: 345 ,flexShrink: 0}} key={index} >
+                                                <Link to={`/properties/${property._id}`} >
+                                                    <CardMedia
+                                                        sx={{ height: 140 }}
+                                                        image={`${property.imageUrls[0]}`}
+                                                        title="green iguana"
+                                                    />
+                                                    <CardContent>
+                                                        <Typography gutterBottom variant="h5" component="div">
+                                                        {property.name}
+                                                        </Typography>
+
+                                                        <Typography variant="body2" color="text.secondary">
+                                                        {property.description}
+                                                        </Typography>
+                                                    </CardContent>
+                                                </Link>
+                                                <CardActions>
+                                                    <DeleteIcon onClick={(e) => {
+                                                        console.log("hiii");
+                                                        handlePropertyDelete(property._id)
+                                                    }}/>
+                                                    <EditIcon />
+                                                </CardActions>
+                                            </Card>
+                                        
+                                    );
+                                    })
+                                }
+                        </div>
+                        
                     
                 </Grid>
             </Grid>
