@@ -133,7 +133,7 @@ const PropertyForm = () => {
                 return;
             }
             setOpen(false)
-            navigate(`/newproperty/${data._id}`)
+            navigate(`/property/${data._id}`)
         }catch(err) {
             
         }

@@ -26,7 +26,7 @@ function App() {
 
           </Route> */}
           <Route path='/profile' element={<Profile />}/>
-          <Route path='/newproperty' element={<PropertyForm/>}/>
+          <Route path='/property' element={<PropertyForm/>}/>
         </Routes>
       </Router>
 
