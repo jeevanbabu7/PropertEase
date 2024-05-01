@@ -18,6 +18,7 @@ VisibilityOff
 }
 from '@mui/icons-material'
 import Auth from "./auth"
+import validator from 'email-validator'
 import './signup.css'
 
 
@@ -39,6 +40,10 @@ const SignUp = () => {
     // e.preventDefault()
     console.log(formData);
     const {password2,...rest} = formData;
+    if(!validator.validate(formData.email)) {
+      setError("Invalid email address")
+      return
+    }
     if(formData.password != formData.password2) {
       alert("Password do not match...");
       return;

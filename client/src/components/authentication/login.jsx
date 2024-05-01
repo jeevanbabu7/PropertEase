@@ -8,7 +8,8 @@ import {
      OutlinedInput,
      IconButton,
      Button,
-     Divider
+     Divider,
+     Snackbar
 
 } from '@mui/material'
 import {
@@ -19,7 +20,7 @@ from '@mui/icons-material'
 
 import { useDispatch, useSelector } from 'react-redux'
 import { signInFailure, signInStart, signInSuccess } from '../../redux/user/userSlice'
-
+import validator from 'email-validator'
 import Auth from './auth';
 import './login.css'
 
@@ -33,6 +34,17 @@ const Login = () => {
   const [formData,setFormData] = useState({});
   const {loading,error} = useSelector((state) => state.user)
 
+  const [alertMsg, setAlertMsg] = useState({
+    open: error,
+    vertical: 'top',
+    horizontal: 'center',
+  });
+
+  const {open,vertical,horizontal} = alertMsg;
+  const handleClose = () => {
+    setAlertMsg({ ...state, open: false });
+  }
+
   const handleChange = (e) => {
     console.log(formData);
     setFormData((prevData) => {
@@ -42,6 +54,11 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    if(!validator.validate(formData.email)) {
+      dispatch(signInFailure("Invalid email address"))
+      return
+    }
+
     try {
      
       const res = await fetch('http://localhost:5000/api/auth/signin', {
@@ -76,6 +93,14 @@ const Login = () => {
   };
 
   return (
+          <>
+          <Snackbar
+          anchorOrigin={{ vertical, horizontal }}
+          open={open}
+          message={error}
+          key={vertical + horizontal}
+          onClose={handleClose}
+        />
         <section className="flexColCenter sign-in">
             <form onSubmit={handleSubmit} >
               <div className="innerWidth paddings signin-container">
@@ -124,6 +149,7 @@ const Login = () => {
 
             </form>
           </section>
+          </>
   )
 }
 
