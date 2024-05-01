@@ -353,24 +353,26 @@
 
                                     return (
                                         
-                                            <Card sx={{ maxWidth: 345 ,flexShrink: 0}} key={index} >
+                                            <Card sx={{ maxWidth: 345 ,flexShrink: 0,overflow: "auto"}} key={index} >
                                                 <Link to={`/properties/${property._id}`} >
                                                     <CardMedia
-                                                        sx={{ height: 140 }}
+                                                        sx={{ height: 150}}
                                                         image={`${property.imageUrls[0]}`}
                                                         title="green iguana"
                                                     />
-                                                    <CardContent>
+                                                    <CardContent 
+                                                        sx={{height:150}}
+                                                    >
                                                         <Typography gutterBottom variant="h5" component="div">
                                                         {property.name}
                                                         </Typography>
 
                                                         <Typography variant="body2" color="text.secondary">
-                                                        {property.description}
+                                                        {`${property.description.slice(0,80)}...`}
                                                         </Typography>
                                                     </CardContent>
                                                 </Link>
-                                                <CardActions>
+                                                <CardActions >
                                                     <DeleteIcon onClick={(e) => {
                                                         console.log("hiii");
                                                         handlePropertyDelete(property._id)

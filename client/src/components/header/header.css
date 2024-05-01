@@ -14,7 +14,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem ;
+    /* padding: 1rem ; */
 }
 
 .h-menu {
@@ -34,6 +34,7 @@
 @media (max-width:768px) {
     .menu-icon {
         display: block;
+        height: 2.6rem;
     }
     .h-menu {
         position: absolute;
