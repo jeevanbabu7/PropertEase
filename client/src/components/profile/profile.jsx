@@ -212,8 +212,9 @@
         useEffect(() => {
             if(file) {
                 handleFileUpload(file);
-                
             }
+
+            handleShowListing();
         },[file]);
 
 
@@ -315,7 +316,7 @@
                             
                                     >{loading ? 'loading..': "UPDATE"}</Button>
 
-                                    <Link to='/newproperty'>
+                                    <Link to='/property'>
                                         <Button 
                                             variant='outlined'
                                             sx={boxStyles}
@@ -345,7 +346,7 @@
                 </Grid>
                 <Grid item xs={12} md={7} sx={{
                 }}>
-                    <Button variant='outlined' onClick={handleShowListing}>My properties</Button>
+                    {/* <Button variant='outlined' onClick={handleShowListing}>My properties</Button> */}
                     
                         <div className="property--container">
                         {       propertyList.map((property,index) => {
@@ -374,7 +375,7 @@
                                                         console.log("hiii");
                                                         handlePropertyDelete(property._id)
                                                     }}/>
-                                                    <EditIcon />
+                                                    <Link to={`/update-property/${property._id}`}><EditIcon /></Link>
                                                 </CardActions>
                                             </Card>
                                         

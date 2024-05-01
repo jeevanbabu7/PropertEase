@@ -7,7 +7,8 @@ import {
   InputLabel,
   OutlinedInput,
   IconButton,
-  Button
+  Button,
+  Box
 
 } from '@mui/material'
 import {
@@ -84,22 +85,36 @@ const SignUp = () => {
       <form>
         <div className="innerWidth paddings signup-container">
           <h2>Sign Up</h2>
-          <TextField 
-                
-                label="Name" 
-                variant="outlined" 
-                id="username"
-                onChange={handleChange}
-                
-            />
-          <TextField 
-                
-                label="Email" 
-                variant="outlined" 
-                id="email"
-                onChange={handleChange}
-                
-            />
+          <Box 
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              gap: "1rem"
+            }}
+          >
+            <TextField 
+                  
+                  label="Name" 
+                  variant="outlined" 
+                  id="username"
+                  onChange={handleChange}
+                  sx={{
+                    width: "50%"
+                  }}
+                  
+              />
+            <TextField 
+                  
+                  label="Email" 
+                  variant="outlined" 
+                  id="email"
+                  onChange={handleChange}
+                  sx={{
+                    width: "50%"
+                  }}
+                  
+              />
+          </Box>
         <FormControl variant="outlined">
                         <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
                         <OutlinedInput
@@ -145,16 +160,19 @@ const SignUp = () => {
 
         <Button variant="contained" onClick={handleSubmit}>Sign up</Button>
         <Auth />
-        </div>
-        
-      </form>
-      <div className="c-log-in">
+
+        <div className="c-log-in">
         <p>Have an account?</p>
         <Link to='/sign-in'>
           <span className="secondaryText ">Sign in</span>
         </Link>
         {error && <p className='text-red-500 mt-5'>{error}</p>}
       </div>
+
+        </div>
+        
+      </form>
+
     </section>
   )
 }

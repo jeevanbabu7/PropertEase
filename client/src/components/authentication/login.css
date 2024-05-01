@@ -1,15 +1,22 @@
 .sign-in {
     position: relative;
-    top: 5rem;
+    top: 4rem;
+    height: 100vh;
+    background: linear-gradient(195deg, rgba(66, 66, 74, 0.6), rgba(25, 25, 25, 0.6)) center center / cover no-repeat, url(./bg-sign-in-basic.jpeg) transparent;
+    background-position: center center;
 }
 
 .signin-container {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
     width: 30rem;
     gap: 2rem;
     text-align: center;
+    background-color: white;
+    border-radius: 2rem;
+    
 }
 
 .signin-container > input {
@@ -24,3 +31,4 @@
     border-radius: 5px;
     color: white;
 }
+

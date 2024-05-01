@@ -40,7 +40,7 @@ const Auth = () => {
       // Dispatch action to update user state
       dispatch(signInSuccess(data));
       // Navigate to dashboard
-      navigate('/dashboard');
+      navigate('/profile');
     } catch (e) {
       console.log(e.message);
     }

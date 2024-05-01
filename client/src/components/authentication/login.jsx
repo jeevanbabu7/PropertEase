@@ -72,12 +72,12 @@ const Login = () => {
   };
 
   const inputStyles = {
-    
+    width: "25rem"
   };
 
   return (
         <section className="flexColCenter sign-in">
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} >
               <div className="innerWidth paddings signin-container">
                 <h2>Sign In</h2>
                 <TextField 
@@ -114,15 +114,15 @@ const Login = () => {
 
               <Divider/>
                 <Auth />
+                <div className="c-log-in">
+                <p>Don't have an account?</p>
+                <Link to='/sign-up'>
+                  <a  className="secondaryText ">Sign up</a>
+                </Link>
               </div>
-              
+              </div>
+
             </form>
-            <div className="c-log-in">
-              <p>Don't have an account?</p>
-              <Link to='/sign-up'>
-                <a  className="secondaryText ">Sign up</a>
-              </Link>
-            </div>
           </section>
   )
 }

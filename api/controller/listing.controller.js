@@ -69,3 +69,14 @@ export const updateProperty = async (req,res,next) => {
     }
 
 }
+
+export const propertyDetails = async (req,res,next) => {
+
+    try {
+        const property = await Listing.findById(req.params.id);
+        console.log(property);
+        res.status(200).json(property);
+    }catch(err) {
+        next(err);
+    }
+}
