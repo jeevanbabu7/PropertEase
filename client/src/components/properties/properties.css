@@ -1,0 +1,38 @@
+.properties--container {
+
+    height: 100vh;
+    padding-top: 7rem;
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    background: linear-gradient(195deg, rgba(66, 66, 74, 0.6), rgba(25, 25, 25, 0.6)) center center / cover no-repeat, url(./bg-sign-in-basic.jpeg) ;
+    background-position: center center;
+
+
+}
+
+.search--field {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    background-color: aliceblue;
+    
+    border-radius: 10px;
+}
+
+.search--field  > input {
+    outline: none;
+    border: none;
+    width: 18rem;
+    height: 3rem;
+    background-color: aliceblue;
+    text-indent: 1rem;
+}
+
+.search-btn {
+    height: 3rem;
+    width: 4rem;
+    border-radius: 10%;
+}

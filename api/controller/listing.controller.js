@@ -84,6 +84,9 @@ export const propertyDetails = async (req,res,next) => {
 export const getListing = async (req,res,next) => {
 
     try {
+
+        // if condition is given in the query string use it, else use default value 
+
         const limit = parseInt(req.query.limit) || 10;
         const startIndex = parseInt(req.query.startIndex) || 0;
 
