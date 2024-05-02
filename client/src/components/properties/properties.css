@@ -2,9 +2,6 @@
 
     height: 100vh;
     padding-top: 7rem;
-    display: flex;
-    justify-content: center;
-    align-items: start;
     background: linear-gradient(195deg, rgba(66, 66, 74, 0.6), rgba(25, 25, 25, 0.6)) center center / cover no-repeat, url(./bg-sign-in-basic.jpeg) ;
     background-position: center center;
 
@@ -17,8 +14,6 @@
     justify-content: center;
     align-items: center;
     gap: 1rem;
-    background-color: aliceblue;
-    
     border-radius: 10px;
 }
 
@@ -27,12 +22,38 @@
     border: none;
     width: 18rem;
     height: 3rem;
-    background-color: aliceblue;
+    background-color: rgb(211, 229, 244);
     text-indent: 1rem;
 }
-
+.search--field  > input::placeholder {
+    color: rgb(89, 89, 89);
+}
 .search-btn {
     height: 3rem;
     width: 4rem;
     border-radius: 10%;
+}
+
+.left-grid {
+
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: start;
+
+}
+
+.filter-keys {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    padding-left: 5rem;
+    padding-top: 2rem;
+}
+
+.left-container {
+    background-color: white;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    width: 30rem;
 }
