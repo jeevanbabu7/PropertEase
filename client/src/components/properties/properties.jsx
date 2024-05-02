@@ -44,7 +44,7 @@ const Properties = () => {
         <Grid item className='left-grid' xs={12} md={5}>
           <div className="left-container">
             <div className="search--field">
-              <input type="text" placeholder='Name ,location etc' onChange={handleChange} value={searchTerm}/>
+              <input type="text" placeholder='Name or location....' onChange={handleChange} value={searchTerm}/>
               <Button className='search-btn' onClick={handleSubmit} variant='contained'><SearchIcon /></Button>
             </div>
             <div className="filter-keys">
@@ -65,14 +65,14 @@ const Properties = () => {
                 // value={age}
                 // label="Sort"
                 onChange={handleDropdownChange}
-
+                defaultValue="Latest"
                 sx={{
                   width: "8rem"
                 }}
               >
                 <MenuItem value="Latest">Latest</MenuItem>
-                <MenuItem value="Price">Price</MenuItem>
-                <MenuItem >Thirty</MenuItem>
+                <MenuItem value="DSC">Price high to low</MenuItem>
+                <MenuItem value="ASC">Price low to high</MenuItem>
               </Select>
             </div>
           </div>
