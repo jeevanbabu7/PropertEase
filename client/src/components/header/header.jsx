@@ -128,8 +128,10 @@ const Header = () => {
 
 
     return (
-        <section className="h-wrapper">
-            <div className="h-container">
+        <section className="h-wrapper" >
+            <div className="h-container" style={{
+              backgroundColor: "rgb(0,0,0,.1)"
+            }}>
                 <h1>PropertEase</h1>
                 <OutsideClickHandler onOutsideClick={closeMenu}>
                     <div style={getMenuStyles()} className="h-menu">

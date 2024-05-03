@@ -1,5 +1,6 @@
 .h-wrapper {
-    background: #252544;
+    /* background: #252544; */
+    background-color: aqua;
     color: white;
     position: fixed;
     top: 0;
@@ -38,7 +39,7 @@
     }
     .h-menu {
         position: absolute;
-        color: var(--black);
+        /* color: var(--black); */
         top: 5.4rem;
         right: 0;
         background-color: white;

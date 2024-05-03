@@ -3,7 +3,16 @@
     margin-top: 4rem;
     top: 4rem;
     padding-bottom: 2rem;
-    background-color:#101418;
+    height: 80vh;
+    background: linear-gradient(
+        195deg,
+        rgba(66, 66, 74, 0.7), 
+        rgba(25, 25, 25, 0.8) 
+    ) center center / cover no-repeat, 
+    url(./cover.jpg) transparent;
+
+background-position: center center;
+
 
 }
 .search-btn {
@@ -18,9 +27,18 @@
 }
 .hero-container {
     justify-content: space-around;
+    
     gap: 5rem;
     width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
+}
+
+.hero-title {
+    margin-top: 2rem;
+    font-size: x-large;
 }
 
 .hero-left {

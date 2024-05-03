@@ -17,14 +17,14 @@ const Home = () => {
         <>
             <div className='App'>
                 <div>
-                    <div className='white-gradient'/>
+                    {/* <div className='white-gradient'/> */}
                     <div className='group1'>
                         <Header />
                         <Main />
                     </div>
                 </div>
 
-                <Comapanies />
+                {/* <Comapanies /> */}
                 <Residencies />
                 <Value />
                 <Contact />
