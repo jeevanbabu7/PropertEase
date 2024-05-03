@@ -45,11 +45,8 @@ const Properties = () => {
   }
 
 
-  console.log(sidebarData);
   const handleInputChange = (e) => {
     const elem = e.target;
-
-    console.log(e.target.id);
     setSidebarData((prev) => {
 
       if(elem.id == 'parking' || elem.id == 'furnished' ) {

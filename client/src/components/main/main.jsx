@@ -1,11 +1,22 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {HiLocationMarker} from 'react-icons/hi'
 import { ImSearch } from "react-icons/im";
 import CountUp from "react-countup"
 import {motion} from "framer-motion"
+import { useNavigate } from 'react-router-dom';
 import './main.css'
 import '../../index.css'
 const Main = () => {
+    const navigate = useNavigate();
+    const [searchTerm,setSearchTerm] = useState('');
+    const handleSearch = (e) => {
+       
+        e.preventDefault()
+        const urlParams = new URLSearchParams(window.location.search);
+        urlParams.set('searchTerm',searchTerm);
+        const searchQuery = urlParams.toString();
+        navigate(`/properties/search?${searchQuery}`);
+    }
   return (
     <div>
       <section className="hero-wrapper">
@@ -29,8 +40,10 @@ const Main = () => {
 
                     <div className="search-bar">
                         <HiLocationMarker color="var(--blue)" size={25}/>
-                        <input type="text" />
-                        <button className=" search-btn"><ImSearch color=''/></button>
+                        <input type="text" onChange={(e) => {
+                            setSearchTerm(e.target.value);
+                        }}/>
+                        <button onClick={handleSearch}  className=" search-btn"><ImSearch color=''/></button>
                     </div>
 
                     <div className="stats">
