@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import './properties.css'
 import SearchIcon from '@mui/icons-material/Search';
-import {useNavigate} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
 import Search from '../search/search';
-import { Button, Divider,Grid,Checkbox, FormControlLabel, Select, MenuItem, TextField, Backdrop, CircularProgress} from '@mui/material';
+import { Button, Divider,Grid,Checkbox, FormControlLabel, Select, MenuItem, TextField, Backdrop, CircularProgress, Paper, Card, CardMedia, CardContent, Typography} from '@mui/material';
 
 const Properties = () => {
 
@@ -108,7 +108,7 @@ const Properties = () => {
       </Backdrop>
 
       <Grid container className='grid-container'>
-        <Grid item className='left-grid' xs={12} md={5}>
+        <Grid item className='left-grid' xs={12} md={4}>
           <div className="left-container">
             <div className="search--field">
               <input type="text" id='searchTerm' placeholder='Name or location....' onChange={(e) => {
@@ -156,8 +156,40 @@ const Properties = () => {
             </div>
           </div>
         </Grid>
-        <Grid item xs={12} md={7}>
+        <Grid className='right-grid' item xs={12} md={8}>
+              <div className="property-container">
+                {listings.length && listings.map((property,index) => {
 
+                  return (
+                          <Paper elevation={6} sx={{margin: "auto" }}>
+                            <Card sx={{ maxWidth: 345, flexShrink: 0, overflow: "hidden" }} key={index}>
+                                <Link to={`/properties/${property._id}`}>
+                                    <CardMedia
+                                        sx={{ height: 150,
+                                            '&:hover': {
+                                                transform: 'scale(1.1)',
+                                            },
+                                            transitionDuration:'.5s'
+                                            
+                                        }}
+                                        image={`${property.imageUrls[0]}`}
+                                        title="green iguana"
+                                    />
+                                    <CardContent sx={{ height: 150 }}>
+                                        <Typography gutterBottom variant="h5" component="div">
+                                            {property.name}
+                                        </Typography>
+
+                                        <Typography variant="body2" color="text.secondary">
+                                            {`${property.description.slice(0, 80)}...`}
+                                        </Typography>
+                                    </CardContent>
+                                </Link>
+                            </Card>
+                        </Paper>
+                  )
+                })}
+              </div>
         </Grid>
       </Grid>
       {/* <section className="search-grid">
