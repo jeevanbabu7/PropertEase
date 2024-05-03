@@ -4,6 +4,7 @@ import { CircularProgress,Backdrop, Button } from '@mui/material';
 import SwiperCore, { Navigation } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import {useSelector} from "react-redux"
+import Map from '../map/map';
 
 import {
 
@@ -166,7 +167,7 @@ const Property = () => {
                             </div>
                         </Grid>
                         <Grid item xs={12} md={6}>
-
+                                <Map address={''} city={'Taliparamba'} country={'India'}/>
                         </Grid>
                     </Grid>
                 </>
