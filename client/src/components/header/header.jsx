@@ -134,7 +134,7 @@ const Header = () => {
                 <OutsideClickHandler onOutsideClick={closeMenu}>
                     <div style={getMenuStyles()} className="h-menu">
                         <Link to='/'>Home</Link>
-                        <Link to='/properties'>Properties</Link>
+                        <Link to='/properties/search'>Properties</Link>
                         <a href="#contact">Contact Us</a>
                         <a href="#FAQ">FAQ</a>
                         

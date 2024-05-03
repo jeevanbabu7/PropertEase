@@ -42,7 +42,7 @@ const Login = () => {
 
   const {open,vertical,horizontal} = alertMsg;
   const handleClose = () => {
-    setAlertMsg({ ...state, open: false });
+    setAlertMsg({ ...alertMsg, open: false });
   }
 
   const handleChange = (e) => {

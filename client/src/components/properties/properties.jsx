@@ -3,18 +3,37 @@ import './properties.css'
 import SearchIcon from '@mui/icons-material/Search';
 import {useNavigate} from 'react-router-dom'
 import Search from '../search/search';
-import { Button, Divider,Grid,Checkbox, FormControlLabel, Select, MenuItem, TextField} from '@mui/material';
+import { Button, Divider,Grid,Checkbox, FormControlLabel, Select, MenuItem, TextField, Backdrop, CircularProgress} from '@mui/material';
 
 const Properties = () => {
 
+  const [sidebarData,setSidebarData] = useState({
+    searchTerm: '',
+    bedrooms: 1,
+    parking: false,
+    furnished: false,
+    sort: 'createdAt',
+    order: 'desc'
+  });
+  
+  console.log(sidebarData);
   const [searchTerm,setSearchTerm] = useState();
+  const [loading,setLoading] = useState(false);
+  const [listings,setListings] = useState([]);
+  const [error,setError] = useState(false);
+
+  console.log(listings);
 
   const navigate = useNavigate();
   const handleSubmit = (e) => {
     e.preventDefault()
     const urlParams = new URLSearchParams(window.location.search);
-
     urlParams.set('searchTerm',searchTerm);
+    urlParams.set('parking',sidebarData.parking);
+    urlParams.set('furnished',sidebarData.furnished);
+    urlParams.set('sort',sidebarData.sort);
+    urlParams.set('order',sidebarData.order);
+    urlParams.set('bedrooms',sidebarData.bedrooms);
     const searchQuery = urlParams.toString();
     navigate(`?${searchQuery}`);
 
@@ -25,8 +44,29 @@ const Properties = () => {
     setSearchTerm(prev => e.target.value);
   }
 
-  const handleDropdownChange = (e) => {
-    console.log(e.target.value);
+
+  console.log(sidebarData);
+  const handleInputChange = (e) => {
+    const elem = e.target;
+
+    console.log(e.target.id);
+    setSidebarData((prev) => {
+
+      if(elem.id == 'parking' || elem.id == 'furnished' ) {
+
+        return {...prev,[elem.id]: elem.checked};
+      }
+      else if(elem.name && elem.name == 'sort') {
+      
+        const sort = e.target.value.split('_')[0] || 'created_at';
+        const order = e.target.value.split('_')[1] || "desc";
+        console.log(sort,order);
+        return {...prev,sort,order}
+      }
+      else {
+        return {...prev,[elem.id]: elem.value};
+      }
+    });
   }
 
     useEffect(() => {
@@ -35,44 +75,86 @@ const Properties = () => {
       if(searchTermFromUrl) {
         setSearchTerm(searchTermFromUrl);
       }
+      // use Effect will get executed after clicking search , then fetch properties
+      const fetchListings = async () => {
+        
+        try {
+          const searchQuery = urlParams.toString();
+          const res = await fetch(`/api/listing/get?${searchQuery}`);
+          const data = await res.json();
+          console.log(data);
+          setListings(data);
+          setError(false);
+        }catch(err) {
+          setError(err.message);
+        }
+
+      }
+      setLoading(true);
+      setTimeout(() => {
+        fetchListings();
+        setLoading(false);
+      },1000)
+      
 
     },[location.search]);
 
   return (
+    
     <section className="properties--container">
+      <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={loading}
+        
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
+
       <Grid container className='grid-container'>
         <Grid item className='left-grid' xs={12} md={5}>
           <div className="left-container">
             <div className="search--field">
-              <input type="text" placeholder='Name or location....' onChange={handleChange} value={searchTerm}/>
+              <input type="text" id='searchTerm' placeholder='Name or location....' onChange={(e) => {
+                handleChange(e);
+                handleInputChange(e);
+              }} value={searchTerm}/>
               <Button className='search-btn' onClick={handleSubmit} variant='contained'><SearchIcon /></Button>
             </div>
             <div className="filter-keys">
-              <FormControlLabel control={<Checkbox  />} label="Parking" />
-              <FormControlLabel control={<Checkbox  />} label="Furnished" />
+              <FormControlLabel control={<Checkbox id='parking' onChange={handleInputChange} checked={sidebarData.parking} />} label="Parking" />
+              <FormControlLabel control={<Checkbox checked={sidebarData.furnished} onChange={handleInputChange}  id='furnished' />} label="Furnished" />
             </div>
             <div className="filter-keys">
               <p>bedrooms: </p>
-              <TextField variant='standard' sx={{
+              <TextField variant='standard' id='bedrooms' 
+              onChange={handleInputChange}
+              value={sidebarData.bedrooms}
+              sx={{
                 width: "4rem"
               }}/>
+
             </div>
             <div className="filter-keys">
               <p>Sort:</p>
               <Select
                 labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                // value={age}
+                
+                // value={filter}
                 // label="Sort"
-                onChange={handleDropdownChange}
-                defaultValue="Latest"
+                
+                onChange={handleInputChange}
+                
+                defaultValue="createdAt_desc"
+                name='sort'
                 sx={{
-                  width: "8rem"
+                  width: "10rem",
+                  height: '2.2rem'
                 }}
               >
-                <MenuItem value="Latest">Latest</MenuItem>
-                <MenuItem value="DSC">Price high to low</MenuItem>
-                <MenuItem value="ASC">Price low to high</MenuItem>
+                <MenuItem value="createdAt_desc">Latest</MenuItem>
+                <MenuItem value="createdAt_asc">Oldest</MenuItem>
+                <MenuItem value="price_desc">Price high to low</MenuItem>
+                <MenuItem value="price_asc">Price low to high</MenuItem>
               </Select>
             </div>
           </div>

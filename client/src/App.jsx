@@ -22,7 +22,7 @@ function App() {
             
             <Route path="/sign-up" element={<SignUp />} />
             <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/properties" element={<Properties />} />
+            <Route path="/properties/search" element={<Properties />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/property" element={<PropertyForm />} />
             <Route path="/update-property/:id" element={<UpdateProperty />} />

@@ -84,7 +84,7 @@ export const propertyDetails = async (req,res,next) => {
 export const getListing = async (req,res,next) => {
 
     try {
-
+        console.log("working.");
         // if condition is given in the query string use it, else use default value 
 
         const limit = parseInt(req.query.limit) || 10;
@@ -105,11 +105,13 @@ export const getListing = async (req,res,next) => {
         const sort = req.query.sort || 'createdAt';
 
         const order = req.query.order || 'desc';
+        const bedrooms = parseInt(req.query.bedrooms) || 1;
 
         const listings = await Listing.find({
             name: {$regex: searchTerm,$options: 'i'},
             furnished,
-            parking
+            parking,
+            bedrooms
         }).sort(
             {[sort]: order}
         ).limit(limit).skip(startIndex);
