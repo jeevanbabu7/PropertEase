@@ -47,13 +47,14 @@
     flex-direction: column;
     padding: 3rem 2rem;
     justify-content: center;
-    gap: .7rem;
+    gap: .8rem;
     
   }
   
   .listing-price {
     font-size: 2rem;
     font-weight: bold;
+    color: #163C5E;
   }
   
   .listing-address {

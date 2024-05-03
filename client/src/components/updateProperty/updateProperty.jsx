@@ -61,26 +61,25 @@ const PropertyForm = () => {
         })
     }
 
-    const handleImageSubmit = (e) => {
+    const handleImageSubmit = async (e) => {
         
-        console.log("hiii");
-        if(files.length > 0 && files.length < 7) {
-               
-                
+        setOpen(true)
+        if(files.length + formData.imageUrls.length> 0 && files.length + formData.imageUrls.length < 7) {
+
                 const promises = [];
                 for(let i = 0;i<files.length ;++i) {
                     promises.push(storeImage(files[i]));
                 }
                 Promise.all(promises).then(urls => {
-                    setOpen(false)
+                   
                     setFormData({...formData,
-                        imageUrls: urls
+                        imageUrls: [...formData.imageUrls,...urls]
                     })
                     console.log(formData)
-                })
-
-               
-                
+                })   
+        }else {
+            setOpen("Select 1-6 images")
+            setOpen(false)
         }
     }
 
@@ -131,7 +130,7 @@ const PropertyForm = () => {
                 return;
             }
             setOpen(false)
-            navigate(`/property/${data._id}`)
+            navigate(`/properties/${data._id}`)
         }catch(err) {
                 next(err);
         }
@@ -292,7 +291,7 @@ const PropertyForm = () => {
                             handleImageSubmit(e)
                             .then(() => setOpen(false)) 
                             .catch(() => setOpen(false)); 
-                            setOpen(false)
+                            
                         }}
                         disabled={uploading}
                     >{uploading ? "Uploading..":"Upload"}</Button>

@@ -43,6 +43,7 @@ const PropertyForm = () => {
             const fileName = new Date().getTime() + file.name;
             const storageRef = ref(storage,fileName);
             const uploadTask = uploadBytesResumable(storageRef,file)
+            const [error,setError] = useState(false);
             
             uploadTask.on(
                 "state_changed",
@@ -65,10 +66,10 @@ const PropertyForm = () => {
 
     const handleImageSubmit = (e) => {
         
-        console.log("hiii");
+        
         if(files.length > 0 && files.length < 7) {
                
-                
+                setOpen(true);
                 const promises = [];
                 for(let i = 0;i<files.length ;++i) {
                     promises.push(storeImage(files[i]));
@@ -76,14 +77,21 @@ const PropertyForm = () => {
                 Promise.all(promises).then(urls => {
                     setOpen(false)
                     setFormData({...formData,
-                        imageUrls: urls
+                        imageUrls: [...imageUrls,...urls]
                     })
                     console.log(formData)
                 })
 
+                setOpen(false)
+
                
                 
+        }else {
+            setOpen(false);
+            setError("Please select atleast one image.");
         }
+
+        
     }
 
     const handleRemoveImage = (index) => {
@@ -129,13 +137,14 @@ const PropertyForm = () => {
             
             const data = await res.json();
             if(data.success == false) {
-                console.log("Error in creating property");
+                setError("Error in creating property");
                 return;
             }
             setOpen(false)
-            navigate(`/property/${data._id}`)
+            setError(false);
+            navigate(`/properties/${data._id}`)
         }catch(err) {
-            
+            setError("Error in adding new property");
         }
     }
     
@@ -273,11 +282,11 @@ const PropertyForm = () => {
                         variant='contained'
                         color='secondary'
                         onClick={(e) => {
-                            setOpen(true)
+                            
                             handleImageSubmit(e)
                             .then(() => setOpen(false)) 
                             .catch(() => setOpen(false)); 
-                            setOpen(false)
+                            
                         }}
                         disabled={uploading}
                     >{uploading ? "Uploading..":"Upload"}</Button>

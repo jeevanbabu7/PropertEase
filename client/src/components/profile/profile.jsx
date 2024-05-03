@@ -1,6 +1,6 @@
     import React, { useEffect, useState } from 'react'
     import { useNavigate,Link } from 'react-router-dom'
-    import { Grid } from '@mui/material'
+    import { Grid, Paper } from '@mui/material'
     import {
         Box,
         TextField,
@@ -51,7 +51,7 @@
         console.log(currentUser);
 
         const boxStyles = {
-            width:"20rem"
+            width:"20rem",
         }
 
         // password Field
@@ -229,6 +229,9 @@
                         flexDirection='column'
                         justifyContent='center'
                         alignItems='center'
+                        sx={{
+                            backgroundColor: 'white',
+                        }}
                         gap={3}
                     >
                         <Box
@@ -263,8 +266,12 @@
                             id="username"
                             label="Name"
                             defaultValue={userData.username}
-                            sx={boxStyles}
+                            sx={{
+                                ...boxStyles,
+                                
+                            }}
                             onChange={handleChange}
+                            
                             />
                         <TextField
                             id="email"
@@ -353,33 +360,39 @@
 
                                     return (
                                         
-                                            <Card sx={{ maxWidth: 345 ,flexShrink: 0,overflow: "auto"}} key={index} >
-                                                <Link to={`/properties/${property._id}`} >
+                                        <Paper elevation={6    } sx={{margin: "auto" }}>
+                                            <Card sx={{ maxWidth: 345, flexShrink: 0, overflow: "hidden" }} key={index}>
+                                                <Link to={`/properties/${property._id}`}>
                                                     <CardMedia
-                                                        sx={{ height: 150}}
+                                                        sx={{ height: 150,
+                                                            '&:hover': {
+                                                                transform: 'scale(1.1)',
+                                                            },
+                                                            transitionDuration:'.5s'
+                                                            
+                                                        }}
                                                         image={`${property.imageUrls[0]}`}
                                                         title="green iguana"
                                                     />
-                                                    <CardContent 
-                                                        sx={{height:150}}
-                                                    >
+                                                    <CardContent sx={{ height: 150 }}>
                                                         <Typography gutterBottom variant="h5" component="div">
-                                                        {property.name}
+                                                            {property.name}
                                                         </Typography>
 
                                                         <Typography variant="body2" color="text.secondary">
-                                                        {`${property.description.slice(0,80)}...`}
+                                                            {`${property.description.slice(0, 80)}...`}
                                                         </Typography>
                                                     </CardContent>
                                                 </Link>
-                                                <CardActions >
+                                                <CardActions>
                                                     <DeleteIcon onClick={(e) => {
                                                         console.log("hiii");
                                                         handlePropertyDelete(property._id)
-                                                    }}/>
+                                                    }} />
                                                     <Link to={`/update-property/${property._id}`}><EditIcon /></Link>
                                                 </CardActions>
                                             </Card>
+                                        </Paper>
                                         
                                     );
                                     })
