@@ -166,7 +166,13 @@ const Property = () => {
                                 )}
                             </div>
                         </Grid>
-                        <Grid item xs={12} md={6}>
+                        <Grid item xs={12} md={6}
+                            sx={{
+                                display:'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center'
+                            }}
+                        >
                                 <Map address={''} city={'Taliparamba'} country={'India'}/>
                         </Grid>
                     </Grid>
