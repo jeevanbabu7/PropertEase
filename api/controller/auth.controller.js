@@ -4,9 +4,10 @@ import jwt from 'jsonwebtoken'
 import bcryptjs from 'bcryptjs'
 
 export const signup = async (req, res, next) => {
-  const { username, email, password } = req.body;
+  console.log("hiii",req.body);
+  const { username, email, password,role} = req.body;
   const hashedPassword = bcryptjs.hashSync(password, 10);
-  const newUser = new User({ username, email, password: hashedPassword });
+  const newUser = new User({ username, email, password: hashedPassword,role});
   try {
     await newUser.save();
     res.status(201).json('User created successfully!');
@@ -50,13 +51,15 @@ export const  google = async (req,res) => {
         .status(200)
         .json(rest);
     }else {
+      console.log("mm",req.body.role);
         const randomPassword = Math.random().toString(36).slice(-8)
         const hashedPassword = bcryptjs.hashSync(randomPassword,10);
 
         const newUser = new User({
           username: req.body.username.split(' ').join('').toLowerCase()+Math.random().toString(36).slice(-4),
           email: req.body.email,password:hashedPassword,
-          avatar: req.body.avatar
+          avatar: req.body.avatar,
+          role: req.body.role
         })
 
         await newUser.save();

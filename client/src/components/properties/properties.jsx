@@ -34,6 +34,7 @@ const Properties = () => {
     urlParams.set('sort',sidebarData.sort);
     urlParams.set('order',sidebarData.order);
     urlParams.set('bedrooms',sidebarData.bedrooms);
+    rlParams.set('bathrooms',sidebarData.bathrooms);
     const searchQuery = urlParams.toString();
     navigate(`?${searchQuery}`);
 
@@ -157,39 +158,41 @@ const Properties = () => {
           </div>
         </Grid>
         <Grid className='right-grid' item xs={12} md={8}>
-              <div className="property-container">
-                {listings.length && listings.map((property,index) => {
+              <section className='outer-container'>
+                <div className="property-container">
+                  {listings.length && listings.map((property,index) => {
 
-                  return (
-                          <Paper elevation={6} sx={{margin: "auto" }}>
-                            <Card sx={{ maxWidth: 345, flexShrink: 0, overflow: "hidden" }} key={index}>
-                                <Link to={`/properties/${property._id}`}>
-                                    <CardMedia
-                                        sx={{ height: 150,
-                                            '&:hover': {
-                                                transform: 'scale(1.1)',
-                                            },
-                                            transitionDuration:'.5s'
-                                            
-                                        }}
-                                        image={`${property.imageUrls[0]}`}
-                                        title="green iguana"
-                                    />
-                                    <CardContent sx={{ height: 150 }}>
-                                        <Typography gutterBottom variant="h5" component="div">
-                                            {property.name}
-                                        </Typography>
+                    return (
+                            <Paper elevation={6} sx={{margin: "auto" }}>
+                              <Card sx={{ maxWidth: 345, flexShrink: 0, overflow: "hidden" }} key={index}>
+                                  <Link to={`/properties/${property._id}`}>
+                                      <CardMedia
+                                          sx={{ height: 150,
+                                              '&:hover': {
+                                                  transform: 'scale(1.1)',
+                                              },
+                                              transitionDuration:'.5s'
+                                              
+                                          }}
+                                          image={`${property.imageUrls[0]}`}
+                                          title="green iguana"
+                                      />
+                                      <CardContent sx={{ height: 150 }}>
+                                          <Typography gutterBottom variant="h5" component="div">
+                                              {property.name}
+                                          </Typography>
 
-                                        <Typography variant="body2" color="text.secondary">
-                                            {`${property.description.slice(0, 80)}...`}
-                                        </Typography>
-                                    </CardContent>
-                                </Link>
-                            </Card>
-                        </Paper>
-                  )
-                })}
-              </div>
+                                          <Typography variant="body2" color="text.secondary">
+                                              {`${property.description.slice(0, 80)}...`}
+                                          </Typography>
+                                      </CardContent>
+                                  </Link>
+                              </Card>
+                          </Paper>
+                    )
+                  })}
+                </div>
+              </section>
         </Grid>
       </Grid>
       {/* <section className="search-grid">

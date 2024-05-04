@@ -1,9 +1,8 @@
 .hero-wrapper {
     color: white;
-    margin-top: 4rem;
-    top: 4rem;
+
     padding-bottom: 2rem;
-    height: 80vh;
+    height: 90vh;
     background: linear-gradient(
         195deg,
         rgba(66, 66, 74, 0.7), 
@@ -37,7 +36,7 @@ background-position: center center;
 }
 
 .hero-title {
-    margin-top: 2rem;
+    margin-top: 4rem;
     font-size: x-large;
 }
 

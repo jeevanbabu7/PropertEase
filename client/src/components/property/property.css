@@ -42,7 +42,9 @@
   
   .listing-details {
     max-width: 4xl;
-    margin: 3;
+   
+    margin-left: 2.5rem;
+    margin-right: 2.5rem;
     display: flex;
     flex-direction: column;
     padding: 3rem 2rem;
@@ -54,14 +56,14 @@
   .listing-price {
     font-size: 2rem;
     font-weight: bold;
-    color: #163C5E;
+    /* color: #163C5E; */
   }
   
   .listing-address {
     display: flex;
     align-items: center;
     margin-top: 6px;
-    color: #4b5563;
+    /* color: #4b5563; */
   }
   
   .listing-type-badge {
@@ -82,7 +84,7 @@
   
   .listing-description {
     margin-top: 1rem;
-    color: #374151;
+    /* color: #374151; */
   }
   
   .listing-features {

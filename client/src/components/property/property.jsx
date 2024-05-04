@@ -84,7 +84,8 @@ const Property = () => {
                                             background: `url(${url}) center no-repeat`,
                                             backgroundSize: 'cover',
                                             width:"100%",
-                                            height: "19rem",
+                                            height: "22rem",
+                                            
 
                                         }}>
 

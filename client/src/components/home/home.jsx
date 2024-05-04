@@ -9,6 +9,7 @@ import Footer from "../footer/footer"
 import GetStarted from "../GetStarted/getStarted"
 import Feedback from "../feedback/feedback"
 import Testimonials from "../testimonials/testimonials"
+import ContactUs from "../contact-us/contactUs"
 
 const Home = () => {
 
@@ -27,8 +28,9 @@ const Home = () => {
                 {/* <Comapanies /> */}
                 <Residencies />
                 <Value />
-                <Contact />
                 <Testimonials />
+                {/* <Contact /> */}
+                <ContactUs />
                 <FAQ />
                 {/* <Feedback /> */}
                 <GetStarted />

@@ -1,12 +1,12 @@
 .h-wrapper {
     /* background: #252544; */
-    background-color: aqua;
+ 
     color: white;
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    
+  
     z-index: 10;
 }
 
@@ -16,6 +16,7 @@
     justify-content: space-between;
     align-items: center;
     /* padding: 1rem ; */
+    height: 4rem;
 }
 
 .h-menu {

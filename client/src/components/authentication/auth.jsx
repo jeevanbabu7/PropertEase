@@ -4,16 +4,17 @@ import GoogleIcon from '@mui/icons-material/Google';
 import { GoogleAuthProvider, getAuth, signInWithPopup } from 'firebase/auth'
 import { useDispatch } from 'react-redux';
 import { signInSuccess } from '../../redux/user/userSlice.js';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import app from '../../firebase.js'
 
 const Auth = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const params = useParams()
 
   const handleGoogleSubmit = async () => {
     try {
-
+      const role = params.role;
       const provider = new GoogleAuthProvider();
       // Get authentication instance
       const auth = getAuth(app);
@@ -30,7 +31,8 @@ const Auth = () => {
         body: JSON.stringify({
           username: result.user.displayName,
           email: result.user.email,
-          avatar: result.user.photoURL
+          avatar: result.user.photoURL,
+          role: role
         })
       });
 
@@ -52,8 +54,13 @@ const Auth = () => {
       variant='outlined' 
       onClick={handleGoogleSubmit} 
       sx={{
-        marginTop: -2
+        marginTop: -2,
+        backgroundColor: "white",
+        '&:hover': {
+          color:'white'
+        }
       }}
+
     >
       <GoogleIcon sx={{ marginRight: 2 }} onClick={handleGoogleSubmit} />
       Continue with Google

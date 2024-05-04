@@ -1,9 +1,9 @@
 .profile-container {
     height:100vh;
     position: relative;
-    top: 5rem;
+    
     /* display: flex; */
-    /* background-color: #0F1214; */
+    /* background-color: #1F2A40; */
 }
 
 .profile--img {
@@ -12,7 +12,7 @@
 }
 
 .userid--box > p {
-    color: var(--primary);
+    /* color: var(--primary); */
     font-weight: 600;
 }
 
@@ -29,7 +29,7 @@
     height: 100vh;
     overflow: auto;
     padding: 1.5rem;
-    background-color: aliceblue;
+    /* background-color: aliceblue; */
 }
 
 .property--container > * {
@@ -37,4 +37,12 @@
     width: 18rem;
     max-height: 23rem;
     
+}
+.delete-edit {
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background-color: #1F2A40;
+    padding-left: 1rem;
 }

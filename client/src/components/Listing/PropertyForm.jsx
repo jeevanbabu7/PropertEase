@@ -35,7 +35,8 @@ const PropertyForm = () => {
 
 
     const [uploading,setUploading] = useState(false);
-
+    const [error,setError] = useState(false);
+            
     console.log(formData);
     const storeImage = async (file) => {
         return new Promise((resolve ,reject) => {
@@ -43,7 +44,6 @@ const PropertyForm = () => {
             const fileName = new Date().getTime() + file.name;
             const storageRef = ref(storage,fileName);
             const uploadTask = uploadBytesResumable(storageRef,file)
-            const [error,setError] = useState(false);
             
             uploadTask.on(
                 "state_changed",
@@ -77,7 +77,7 @@ const PropertyForm = () => {
                 Promise.all(promises).then(urls => {
                     setOpen(false)
                     setFormData({...formData,
-                        imageUrls: [...imageUrls,...urls]
+                        imageUrls: [...formData.imageUrls,...urls]
                     })
                     console.log(formData)
                 })

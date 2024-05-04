@@ -1,49 +1,52 @@
-    import React, { useEffect, useState } from 'react'
-    import { useNavigate,Link } from 'react-router-dom'
-    import { Grid, Paper } from '@mui/material'
-    import {
-        Box,
-        TextField,
-        Alert,    
-        FormControl,
-        InputAdornment,
-        InputLabel,
-        OutlinedInput,
-        IconButton,
-        Button,
-        Divider,
-        Card,CardMedia,CardContent,
-        CardActions,
-        Typography 
-    } from '@mui/material'
-    import {
-        RestartAltSharp,
-        Visibility ,
-        VisibilityOff,
-        
+import React, { useEffect, useState } from 'react'
+import { useNavigate,Link } from 'react-router-dom'
+import { Grid, Paper } from '@mui/material'
+import {
+    Box,
+    TextField,
+    Alert,    
+    FormControl,
+    InputAdornment,
+    InputLabel,
+    OutlinedInput,
+    IconButton,
+    Button,
+    Divider,
+    Card,CardMedia,CardContent,
+    CardActions,
+    Typography 
+} from '@mui/material'
+import {
+    RestartAltSharp,
+    Visibility ,
+    VisibilityOff,
     
-    }
-    from '@mui/icons-material'
-    import DeleteIcon from '@mui/icons-material/Delete';
-    import EditIcon from '@mui/icons-material/Edit';
 
-    import { useRef } from 'react'
-    import app from '../../firebase.js'
-    import {getDownloadURL, getStorage,ref,uploadBytes,uploadBytesResumable} from 'firebase/storage'
-    import {useSelector,useDispatch} from "react-redux"
-    import { 
-        updateUserStart,
-        updateUserSuccess,
-        updateUserFailure,
-        deleteUserStart,
-        deleteUserSuccess,
-        deleteUserFailure,
-        signOutUserStart,
-        signOutUserFailure,
-        signOutUserSuccess,
-        signInFailure
-     } from '../../redux/user/userSlice.js'
-    import './profile.css'
+}
+from '@mui/icons-material'
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+
+import { useRef } from 'react'
+import app from '../../firebase.js'
+import {getDownloadURL, getStorage,ref,uploadBytes,uploadBytesResumable} from 'firebase/storage'
+import {useSelector,useDispatch} from "react-redux"
+import { 
+    updateUserStart,
+    updateUserSuccess,
+    updateUserFailure,
+    deleteUserStart,
+    deleteUserSuccess,
+    deleteUserFailure,
+    signOutUserStart,
+    signOutUserFailure,
+    signOutUserSuccess,
+    signInFailure
+    } from '../../redux/user/userSlice.js'
+import './profile.css'
+import { tokens } from '../../utils/theme.js'
+import { useTheme } from '@emotion/react'
+
     const Profile = () => { 
         const {currentUser, loading} = useSelector(state => state.user)
         const navigate = useNavigate();
@@ -53,6 +56,8 @@
         const boxStyles = {
             width:"20rem",
         }
+        const theme = useTheme();
+        const colors = tokens(theme.palette.mode);
 
         // password Field
         const handleMouseDownPassword = (event) => {
@@ -223,14 +228,17 @@
         <section className="profile-container">
                 
             <Grid container spacing={2}>
-                <Grid item xs={12} md={5}>
+                <Grid item xs={12} md={5}
+           
+                >
                     <Box
                         display="flex"
                         flexDirection='column'
                         justifyContent='center'
                         alignItems='center'
                         sx={{
-                            backgroundColor: 'white',
+                            backgroundColor: `${colors.primary[400]}`,
+                            height: '100vh'
                         }}
                         gap={3}
                     >
@@ -314,7 +322,7 @@
                                     }}
                                 >
                                     <Button 
-                                        variant='contained' color="success" sx={{
+                                        variant='contained' color="secondary" sx={{
                                         ...boxStyles,
                                         
                                         }}
@@ -325,9 +333,15 @@
 
                                     <Link to='/property'>
                                         <Button 
-                                            variant='outlined'
-                                            sx={boxStyles}
+                                            variant='contained'
+                                            color='primary'
+                                            sx={{
+                                                ...boxStyles,
+                                                color:'primary'
+                                            }}
+                                           
                                         >Add property</Button>
+                                        
                                     </Link>
                                 </Box>
                             
@@ -374,7 +388,9 @@
                                                         image={`${property.imageUrls[0]}`}
                                                         title="green iguana"
                                                     />
-                                                    <CardContent sx={{ height: 150 }}>
+                                                    <CardContent sx={{ height: 150,
+                                                        backgroundColor: '#1F2A40'
+                                                     }}>
                                                         <Typography gutterBottom variant="h5" component="div">
                                                             {property.name}
                                                         </Typography>
@@ -384,13 +400,13 @@
                                                         </Typography>
                                                     </CardContent>
                                                 </Link>
-                                                <CardActions>
-                                                    <DeleteIcon onClick={(e) => {
+                                               <div className="delete-edit">
+                                               <DeleteIcon onClick={(e) => {
                                                         console.log("hiii");
                                                         handlePropertyDelete(property._id)
                                                     }} />
                                                     <Link to={`/update-property/${property._id}`}><EditIcon /></Link>
-                                                </CardActions>
+                                               </div>
                                             </Card>
                                         </Paper>
                                         

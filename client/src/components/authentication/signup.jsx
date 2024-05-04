@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { Link,useNavigate } from "react-router-dom"
+import { Link,useNavigate, useParams } from "react-router-dom"
 import { 
   TextField,
   FormControl,
@@ -8,7 +8,8 @@ import {
   OutlinedInput,
   IconButton,
   Button,
-  Box
+  Box,
+  Checkbox
 
 } from '@mui/material'
 import {
@@ -28,7 +29,7 @@ const SignUp = () => {
   const navigate = useNavigate();
   const [formData,setFormData] = useState({});
   const [error, setError] = useState(null);
-
+  const params = useParams();
   const handleChange = (e) => {
     console.log(formData);
     setFormData((prevData) => {
@@ -36,9 +37,11 @@ const SignUp = () => {
     })
   }
 
+  
+
   const handleSubmit = async (e) => {
     // e.preventDefault()
-    console.log(formData);
+    const userRole = params.role;
     const {password2,...rest} = formData;
     if(!validator.validate(formData.email)) {
       setError("Invalid email address")
@@ -49,6 +52,8 @@ const SignUp = () => {
       return;
     }
 
+    console.log("mm",userRole);
+
 
     try {
       const res = await fetch('http://localhost:5000/api/auth/signup', {
@@ -56,7 +61,7 @@ const SignUp = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(rest),
+        body: JSON.stringify({...rest,role:userRole})
       });
       const data = await res.json();
       // if (data.success === false) {
@@ -162,7 +167,7 @@ const SignUp = () => {
                           label="Confirm Password"
                         />
         </FormControl>
-
+ 
         <Button variant="contained" onClick={handleSubmit}>Sign up</Button>
         <Auth />
 

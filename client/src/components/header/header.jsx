@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import Hamburger from 'hamburger-react';
@@ -18,7 +18,7 @@ import {
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import SettingsIcon from '@mui/icons-material/Settings';
 import LogoutIcon from '@mui/icons-material/Logout';
-
+import { Outlet } from 'react-router-dom';
 import './header.css';
 
 function AccountMenu({imgUrl}) {
@@ -30,6 +30,23 @@ function AccountMenu({imgUrl}) {
     const handleClose = () => {
       setAnchorEl(null);
     };
+    const handleSignOUt = async (e) => {
+      e.preventDefault();
+      try {
+          dispatch(signOutUserStart())
+           const res = await fetch('/api/auth/signout')
+           const data = await res.json();
+           if(data.success == false) {
+              return;
+           }
+           dispatch(signOutUserSuccess(data))
+           navigate('/')
+           console.log("Sign out successfull..");
+      }catch(err) {
+          dispatch(signOutUserFailure(err.message))
+      }
+  }
+
     return (
       <React.Fragment>
         <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
@@ -87,19 +104,14 @@ function AccountMenu({imgUrl}) {
             </MenuItem>
           </Link>
           <Divider />
-          <MenuItem onClick={handleClose}>
-            <ListItemIcon>
-              <SettingsIcon fontSize="small" /> {/* Assuming SettingsIcon is imported */}
-            </ListItemIcon>
-            Settings
-          </MenuItem>
-          <MenuItem onClick={handleClose}>
+          <MenuItem onClick={handleSignOUt}>
             <ListItemIcon>
               <LogoutIcon fontSize="small" /> {/* Assuming LogoutIcon is imported */}
             </ListItemIcon>
             Logout
           </MenuItem>
         </Menu>
+        {/* <Outlet /> */}
       </React.Fragment>
     );
   }
@@ -125,20 +137,28 @@ const Header = () => {
 
 
 
-
-
+   
+  
     return (
+        <>
         <section className="h-wrapper" >
             <div className="h-container" style={{
-              backgroundColor: "rgb(0,0,0,.1)"
+              backgroundColor: "rgb(0,0,0,.1)",
+              paddingLeft: '1rem',
+              paddingRight: '1rem'
             }}>
-                <h1>PropertEase</h1>
+                <h1 >PropertEase</h1>
                 <OutsideClickHandler onOutsideClick={closeMenu}>
                     <div style={getMenuStyles()} className="h-menu">
-                        <Link to='/'>Home</Link>
+                        {currentUser != null ? (  
+                            <Link to='/dashboard'>Dashboard</Link>
+                        ): (
+                          <Link to='/'>Home</Link>
+                        )}
                         <Link to='/properties/search'>Properties</Link>
-                        <a href="#contact">Contact Us</a>
-                        <a href="#FAQ">FAQ</a>
+                        {window.location.pathname == '/' && <a href="/about-us">About Us</a>}
+                        {window.location.pathname == '/' && <a href="#FAQ">FAQ</a>}
+                        
                         
                         {currentUser != null ? (
                             <AccountMenu imgUrl={currentUser.avatar}/>
@@ -164,6 +184,8 @@ const Header = () => {
                 </div>
             </div>
         </section>
+        <Outlet />
+        </>
     );
 };
 
