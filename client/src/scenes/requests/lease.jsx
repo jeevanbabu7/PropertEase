@@ -16,20 +16,6 @@ import { useEffect, useState } from 'react'
 import { setUserProperties } from 'firebase/analytics'
 
 
-
-function createData(name, calories, fat, carbs, protein) {
-    return { name, calories, fat, carbs, protein };
-  }
-  
-  const rows = [
-    createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-    createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-    createData('Eclair', 262, 16.0, 24, 6.0),
-    createData('Cupcake', 305, 3.7, 67, 4.3),
-    createData('Gingerbread', 356, 16.0, 49, 3.9),
-  ];
-  
-
 // style for modal................
 const style = {
     position: 'absolute',
@@ -51,8 +37,7 @@ const Lease = () => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode)
     const { currentUser } = useSelector(state => state.user);
-    const subtitle = currentUser.role === "admin" ? "Managing Users" : "Managing tenants";
-    const title = currentUser.role === "admin" ? "Users" : "Tenants";
+ 
 
     // for modal
     const [open, setOpen] = useState(false);
@@ -60,65 +45,11 @@ const Lease = () => {
     const handleClose = () => setOpen(false);
     const [msg,setMsg] = useState(null);
     const [error,setError] = useState(false); 
-    const [userData,setUserData] = useState([]);
+    const [leaseRequests,setLeaseRequests] = useState([]);
 
-    const columns = [
-        { field: "id", headerName: "ID" },
-        {
-            field: "name",
-            headerName: "Name",
-            flex: 1,
-            cellClassName: "name-column--cell",
-        },
-        {
-            field: "age",
-            headerName: "Age",
-            type: "number",
-            headerAlign: "left",
-            align: "left",
-        },
-        {
-            field: "phone",
-            headerName: "Phone Number",
-            flex: 1,
-        },
-        {
-            field: "email",
-            headerName: "Email",
-            flex: 1,
-        },
-        {
-            field: "accessLevel",
-            headerName: "Access Level",
-            flex: 1,
-            renderCell: ({ row: { access } }) => {
-                return (
-                    <Box
-                        width="60%"
-                        m="0 auto"
-                        p="5px"
-                        display="flex"
-                        justifyContent="center"
-                        backgroundColor={
-                            access === "admin"
-                                ? colors.greenAccent[600]
-                                : access === "manager"
-                                    ? colors.greenAccent[700]
-                                    : colors.greenAccent[700]
-                        }
-                        borderRadius="4px"
-                    >
-                        {access === "admin" && <AdminPanelSettingsOutlined />}
-                        {access === "manager" && <SecurityOutlined />}
-                        {access === "user" && <LockOpenOutlined />}
-                        <Typography color={colors.grey[100]} sx={{ ml: "5px" }}>
-                            {access}
-                        </Typography>
-                    </Box>
-                );
-            },
-        },
-    ];
+    
+    
+    
     const fetchRequests = async () => {
        
         const details = await fetch('/api/request/get',{
@@ -130,7 +61,7 @@ const Lease = () => {
         });
 
         const data = await details.json();
-        setUserData(data);
+        setLeaseRequests(data);
 
    
         
@@ -184,7 +115,7 @@ const Lease = () => {
     const role = currentUser.role;
     return (
         <ThemeProvider theme={theme}>
-                <div>
+            <div>
                 
                 <Modal
                     aria-labelledby="transition-modal-title"
@@ -214,7 +145,7 @@ const Lease = () => {
             </div>
       
             <Box m='20px' >
-                <Header title={title} subtitle={title} />
+                <Header title="Lease requests" subtitle="Request history"/>
                 <Box m='40px 0 0 0' height="75vh">
                     <TableContainer component={Paper}>
                         <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -234,7 +165,7 @@ const Lease = () => {
                             </TableRow>
                             </TableHead>
                             <TableBody>
-                            {userData.length && userData.map((row,index) => {
+                            {leaseRequests.length && leaseRequests.map((row,index) => {
                                 
                                 return (
                                         <TableRow

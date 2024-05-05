@@ -8,6 +8,7 @@ import {
 
 import {
   HomeOutlined,
+  HouseOutlined,
   PeopleOutlined,
   ContactsOutlined,
   ReceiptOutlined,
@@ -148,9 +149,10 @@ const SideBarCmp = () => {
                   </Typography>
                   <Typography variant="h5" color={colors.greenAccent[500]}
                   sx={{
-                    backgroundColor: `${colors.primary[400]}`
+                    backgroundColor: `${colors.primary[400]}`,
+                    paddingTop: 3
                   }}>
-                    VP Fancy Admin
+                    
                   </Typography>
                 </Box>
               </Box>
@@ -211,7 +213,7 @@ const SideBarCmp = () => {
                               <Item
                               title="Add new property"
                               to="/property"
-                              icon={<HomeOutlined />}
+                              icon={<HouseOutlined />}
                               selected={selected}
                               setSelected={setSelected}
                             />
@@ -267,7 +269,7 @@ const SideBarCmp = () => {
                 setSelected={setSelected}
               />
 
-              <Typography
+              {/* <Typography
                 variant="h6"
                 color={colors.grey[300]}
                 sx={{ p: "15px 0 5px 20px",
@@ -303,7 +305,7 @@ const SideBarCmp = () => {
                 icon={<MapOutlined />}
                 selected={selected}
                 setSelected={setSelected}
-              />
+              /> */}
               <Typography
                 variant="h6"
                 color={colors.grey[300]}
