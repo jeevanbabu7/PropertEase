@@ -16,19 +16,6 @@ import { useEffect, useState } from 'react'
 
 
 
-function createData(name, calories, fat, carbs, protein) {
-    return { name, calories, fat, carbs, protein };
-  }
-  
-  const rows = [
-    createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-    createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-    createData('Eclair', 262, 16.0, 24, 6.0),
-    createData('Cupcake', 305, 3.7, 67, 4.3),
-    createData('Gingerbread', 356, 16.0, 49, 3.9),
-  ];
-  
-
 
 
 
@@ -41,63 +28,6 @@ const Users = () => {
 
     const [userData,setUserData] = useState([]);
 
-    const columns = [
-        { field: "id", headerName: "ID" },
-        {
-            field: "name",
-            headerName: "Name",
-            flex: 1,
-            cellClassName: "name-column--cell",
-        },
-        {
-            field: "age",
-            headerName: "Age",
-            type: "number",
-            headerAlign: "left",
-            align: "left",
-        },
-        {
-            field: "phone",
-            headerName: "Phone Number",
-            flex: 1,
-        },
-        {
-            field: "email",
-            headerName: "Email",
-            flex: 1,
-        },
-        {
-            field: "accessLevel",
-            headerName: "Access Level",
-            flex: 1,
-            renderCell: ({ row: { access } }) => {
-                return (
-                    <Box
-                        width="60%"
-                        m="0 auto"
-                        p="5px"
-                        display="flex"
-                        justifyContent="center"
-                        backgroundColor={
-                            access === "admin"
-                                ? colors.greenAccent[600]
-                                : access === "manager"
-                                    ? colors.greenAccent[700]
-                                    : colors.greenAccent[700]
-                        }
-                        borderRadius="4px"
-                    >
-                        {access === "admin" && <AdminPanelSettingsOutlined />}
-                        {access === "manager" && <SecurityOutlined />}
-                        {access === "user" && <LockOpenOutlined />}
-                        <Typography color={colors.grey[100]} sx={{ ml: "5px" }}>
-                            {access}
-                        </Typography>
-                    </Box>
-                );
-            },
-        },
-    ];
     const fetchUser = async () => {
         console.log(currentUser._id);
         const details = await fetch('/api/request/getTenants',{
@@ -166,7 +96,7 @@ const Users = () => {
                                         </TableCell>
                                         
                                         
-                                         <TableCell align="left">{role == 'admin' ? row.email : row.tenatEmail}</TableCell>
+                                         <TableCell align="left">{role == 'admin' ? row.email : row.tenantEmail}</TableCell>
 
                                          <TableCell align="left">{role == 'admin' ? row.role : row.name}</TableCell>
                                                                                 

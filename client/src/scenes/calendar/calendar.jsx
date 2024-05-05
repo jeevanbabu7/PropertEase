@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
@@ -19,6 +19,8 @@ const Calendar = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [currentEvents, setCurrentEvents] = useState([]);
+
+  console.log(currentEvents);
 
   const handleDateClick = (selected) => {
     const title = prompt("Please enter a new title for your event");
@@ -46,6 +48,9 @@ const Calendar = () => {
     }
   };
 
+  useEffect(() => {
+    console.log("hi");
+  },[currentEvents] );
   return (
     <Box m="20px">
       <Header title="Calendar" subtitle="Full Calendar Interactive Page" />

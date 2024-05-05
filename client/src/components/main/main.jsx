@@ -40,7 +40,7 @@ const Main = () => {
 
                     <div className="search-bar">
                         <HiLocationMarker color="var(--blue)" size={25}/>
-                        <input placeholder='Name or location' type="text" onChange={(e) => {
+                        <input placeholder='Location' type="text" onChange={(e) => {
                             setSearchTerm(e.target.value);
                         }}/>
                         <button onClick={handleSearch}  className=" search-btn"><ImSearch color=''/></button>

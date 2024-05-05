@@ -9,6 +9,7 @@ import {
 import {
   HomeOutlined,
   HouseOutlined,
+  SettingsOutlined,
   PeopleOutlined,
   ContactsOutlined,
   ReceiptOutlined,
@@ -81,6 +82,8 @@ const SideBarCmp = () => {
         "& .pro-menu-item.active": {
           color: "#6870fa !important",
         },
+        height: '100vh',
+
         
       }}
     >
@@ -264,7 +267,7 @@ const SideBarCmp = () => {
               <Item
                 title="Maintenance"
                 to="/maintenance"
-                icon={<HelpOutlineOutlined />}
+                icon={<SettingsOutlined />}
                 selected={selected}
                 setSelected={setSelected}
               />

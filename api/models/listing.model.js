@@ -62,7 +62,7 @@ const listingSchema = new mongoose.Schema({
         type: String,
         default: 'none'
     },
-    email: {
+    tenantEmail: {
         type: String,
         default: 'none'
     },

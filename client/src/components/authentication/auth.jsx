@@ -51,14 +51,15 @@ const Auth = () => {
   return (
 
     <Button 
-      variant='outlined' 
+      variant='contained' 
+      color='secondary'
       onClick={handleGoogleSubmit} 
       sx={{
         marginTop: -2,
-        backgroundColor: "white",
-        '&:hover': {
-          color:'white'
-        }
+        // backgroundColor: "white",
+        // '&:hover': {
+        //   color:'white'
+        // }
       }}
 
     >

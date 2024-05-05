@@ -26,7 +26,6 @@ background-position: center center;
 }
 .hero-container {
     justify-content: space-around;
-    
     gap: 5rem;
     width: 100%;
     display: flex;
@@ -45,6 +44,7 @@ background-position: center center;
     flex-direction: column;
     gap: 1.2rem;
     z-index: 2;
+  
 }
 .image-container {
    width: 20rem;
