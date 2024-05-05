@@ -4,8 +4,12 @@ import SearchIcon from '@mui/icons-material/Search';
 import {Link, useNavigate} from 'react-router-dom'
 import Search from '../search/search';
 import { Button, Divider,Grid,Checkbox, FormControlLabel, Select, MenuItem, TextField, Backdrop, CircularProgress, Paper, Card, CardMedia, CardContent, Typography} from '@mui/material';
-
+import { tokens } from '../../utils/theme.js';
+import { useTheme } from '@mui/material';
 const Properties = () => {
+
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode)
 
   const [sidebarData,setSidebarData] = useState({
     searchTerm: '',
@@ -27,6 +31,7 @@ const Properties = () => {
   const navigate = useNavigate();
   const handleSubmit = (e) => {
     e.preventDefault()
+    console.log("hii");
     const urlParams = new URLSearchParams(window.location.search);
     urlParams.set('searchTerm',searchTerm);
     urlParams.set('parking',sidebarData.parking);
@@ -34,7 +39,7 @@ const Properties = () => {
     urlParams.set('sort',sidebarData.sort);
     urlParams.set('order',sidebarData.order);
     urlParams.set('bedrooms',sidebarData.bedrooms);
-    rlParams.set('bathrooms',sidebarData.bathrooms);
+    urlParams.set('bathrooms',sidebarData.bathrooms);
     const searchQuery = urlParams.toString();
     navigate(`?${searchQuery}`);
 
@@ -116,7 +121,7 @@ const Properties = () => {
                 handleChange(e);
                 handleInputChange(e);
               }} value={searchTerm}/>
-              <Button className='search-btn' onClick={handleSubmit} variant='contained'><SearchIcon /></Button>
+              <Button className='search-btn' onClick={handleSubmit} variant='contained' color='secondary'><SearchIcon /></Button>
             </div>
             <div className="filter-keys">
               <FormControlLabel control={<Checkbox id='parking' onChange={handleInputChange} checked={sidebarData.parking} />} label="Parking" />
@@ -177,7 +182,11 @@ const Properties = () => {
                                           image={`${property.imageUrls[0]}`}
                                           title="green iguana"
                                       />
-                                      <CardContent sx={{ height: 150 }}>
+                                      <CardContent sx={{ 
+                                        height: 150,
+                                        backgroundColor: `${colors.primary[400]}`
+                                                  
+                                       }}>
                                           <Typography gutterBottom variant="h5" component="div">
                                               {property.name}
                                           </Typography>

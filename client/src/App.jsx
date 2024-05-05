@@ -13,19 +13,12 @@ import Property from './components/property/property'
 import { ColorModeContext,useMode } from './utils/theme.js'
 import { CssBaseline, ThemeProvider } from '@mui/material'
 
-import Dashboard from './scenes/dashboard/'
-
 import SideBarCmp from './scenes/global/sideBar'
-// import Team from './scenes/global/team'
-// import Contacts from './scenes/global/contacts'
-// import Bar from './scenes/global/bar'
-// import Form from './scenes/global/form'
-// import Line from './scenes/global/line'
-// import Pie from './scenes/global/pie'
-// import FAQ from './scenes/global/faq'
-// import Geography from './scenes/global/geography'
+import Users from './scenes/Users/users.jsx'
+import Lease from './scenes/requests/lease.jsx'
 import Layout from './scenes/dashboard/'
 import DashboardComp from './components/dashboard/dashboardcomp.jsx'
+import Calendar from './scenes/calendar/calendar.jsx'
 
 function App() {
   const [theme,colorMode] = useMode(); 
@@ -51,8 +44,9 @@ function App() {
               
               <Route path='/dashboard' element={<Layout />}>
                 <Route index element={<DashboardComp />}/> 
-                <Route path='team' element={<DashboardComp />}/> 
-
+                <Route  path='tenants' element={<Users />}/> 
+                <Route  path='calendar' element={<Calendar />}/> 
+                <Route path='lease-requests' element={<Lease/>}/>
               </Route>
             </Routes>
           </Router>

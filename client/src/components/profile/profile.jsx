@@ -184,7 +184,7 @@ import { useTheme } from '@emotion/react'
 
         const handleShowListing = async () => {
             try {
-                console.log("hiiiiiii");
+          
                 const res = await fetch(`/api/user/listings/${currentUser._id}`);
                 const data = await res.json();
                 setPropertyList(data);
@@ -330,19 +330,21 @@ import { useTheme } from '@emotion/react'
                                         onClick={handleSubmit}
                             
                                     >{loading ? 'loading..': "UPDATE"}</Button>
-
-                                    <Link to='/property'>
-                                        <Button 
-                                            variant='contained'
-                                            color='primary'
-                                            sx={{
-                                                ...boxStyles,
-                                                color:'primary'
-                                            }}
-                                           
-                                        >Add property</Button>
+                                    {currentUser.role == 'owner' && (
                                         
-                                    </Link>
+                                    <Link to='/property'>
+                                            <Button 
+                                                variant='contained'
+                                                color='primary'
+                                                sx={{
+                                                    ...boxStyles,
+                                                    color:'primary'
+                                                }}
+                                            
+                                            >Add property</Button>
+                                            
+                                        </Link>
+                                    )}
                                 </Box>
                             
                         <Box 

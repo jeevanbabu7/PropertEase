@@ -20,7 +20,14 @@ import {
   MenuOutlined,
   MapOutlined,
   HelpOutlineOutlined ,
-  PieChartOutlineOutlined 
+  PieChartOutlineOutlined,
+  MoneyOutlined,
+  ReportOutlined,
+  NotificationsOutlined,
+  MessageOutlined,
+  LogoDevOutlined,
+  LogoutOutlined,
+  
 } from '@mui/icons-material';
 import { useSelector } from 'react-redux';
 
@@ -29,12 +36,13 @@ import { tokens } from '../../utils/theme'
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const value = selected === title ? 500 : 100;
   return (
     <Link to={to}>
         <MenuItem
           active={selected === title}
           style={{
-            color: colors.grey[100],
+            color: colors.greenAccent[value],
             backgroundColor: `${colors.primary[400]}`
           }}
           onClick={() => setSelected(title)}
@@ -151,7 +159,7 @@ const SideBarCmp = () => {
             <Box >
               <Item
                 title="Dashboard"
-                to="/dashboard  "
+                to="/dashboard"
                 icon={<HomeOutlined />}
                 selected={selected}
                 setSelected={setSelected}
@@ -166,13 +174,15 @@ const SideBarCmp = () => {
               >
                 Data
               </Typography>
-              <Item
-                title="Manage Team"
-                to="/team"
-                icon={<PeopleOutlined />}
-                selected={selected}
-                setSelected={setSelected}
-              />
+              {currentUser.role === 'admin' && (
+                              <Item
+                              title="Manage users"
+                              to="/team"
+                              icon={<PeopleOutlined />}
+                              selected={selected}
+                              setSelected={setSelected}
+                            />
+              )}
               <Item
                 title="Contacts Information"
                 to="/contacts"
@@ -197,23 +207,61 @@ const SideBarCmp = () => {
               >
                 Pages
               </Typography>
-              <Item
-                title="Profile Form"
-                to="/form"
-                icon={<PersonOutlined />}
-                selected={selected}
-                setSelected={setSelected}
-              />
+              {currentUser.role === 'owner' && (
+                              <Item
+                              title="Add new property"
+                              to="/property"
+                              icon={<HomeOutlined />}
+                              selected={selected}
+                              setSelected={setSelected}
+                            />
+              )}
+              {currentUser.role === 'owner' && (
+                  <Item
+                  title="Tenants"
+                  to="tenants"
+                  icon={<PersonOutlined />}
+                  selected={selected}
+                  setSelected={setSelected}
+                />
+              )}
+              {currentUser.role === 'tenant' && (
+                  <Item
+                  title="Properties"
+                  to="/properties/search"
+                  icon={<HomeOutlined />}
+                  selected={selected}
+                  setSelected={setSelected}
+                />
+              )}
+              {currentUser.role === 'tenant' && (
+                  <Item
+                  title="Payments"
+                  to="/payment-history"
+                  icon={<MoneyOutlined />}
+                  selected={selected}
+                  setSelected={setSelected}
+                />
+              )}
+              {currentUser.role != 'admin' && (
+                              <Item
+                              title="Lease requests"
+                              to="/dashboard/lease-requests"
+                              icon={<ReceiptOutlined />}
+                              selected={selected}
+                              setSelected={setSelected}
+                            />
+              )}
               <Item
                 title="Calendar"
-                to="/calendar"
+                to="/dashboard/calendar"
                 icon={<CalendarTodayOutlined />}
                 selected={selected}
                 setSelected={setSelected}
               />
               <Item
-                title="FAQ Page"
-                to="/faq"
+                title="Maintenance"
+                to="/maintenance"
                 icon={<HelpOutlineOutlined />}
                 selected={selected}
                 setSelected={setSelected}
@@ -256,6 +304,39 @@ const SideBarCmp = () => {
                 selected={selected}
                 setSelected={setSelected}
               />
+              <Typography
+                variant="h6"
+                color={colors.grey[300]}
+                sx={{ p: "15px 0 5px 20px",
+                backgroundColor: `${colors.primary[400]}`
+                 }}
+              >
+                Others
+              </Typography>
+
+              <Item
+                title="Notification"
+                to="/Notifications"
+                icon={<NotificationsOutlined />}
+                selected={selected}
+                setSelected={setSelected}
+              />
+              <Item
+                title="Messages"
+                to="/messages"
+                icon={<MessageOutlined />}
+                selected={selected}
+                setSelected={setSelected}
+              />
+
+              <Item
+                title="Log out"
+                to="/"
+                icon={<LogoutOutlined />}
+                selected={selected}
+                setSelected={setSelected}
+              />
+              
             </Box>
           </Menu>
       </Sidebar>

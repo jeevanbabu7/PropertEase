@@ -1,5 +1,6 @@
 
 import Listing from "../models/listing.model.js";
+import RentRequests from "../models/request.model.js";
 import { errorHandler } from "../utils/error.js";
 export  const createListing = async (req,res,next) => {
     try {
@@ -123,4 +124,9 @@ export const getListing = async (req,res,next) => {
     }catch(err) {
         next(err);
     }
+}
+
+
+export const updatePropertyStatus = (req,res,next) => {
+    
 }

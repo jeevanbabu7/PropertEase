@@ -53,6 +53,22 @@ const listingSchema = new mongoose.Schema({
     userRef: {
         type: String,
         required: true
+    },
+    tenantId: {
+        type: String,
+        default: 'none'
+    },
+    tenantName: {
+        type: String,
+        default: 'none'
+    },
+    email: {
+        type: String,
+        default: 'none'
+    },
+    occupied: {
+        type: Boolean,
+        default: false
     }
 },{timestamps: true})
 

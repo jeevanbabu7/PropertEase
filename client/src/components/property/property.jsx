@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { CircularProgress,Backdrop, Button } from '@mui/material';
+import { CircularProgress,Backdrop, Button, Modal, Fade ,Box, Typography} from '@mui/material';
 import SwiperCore, { Navigation } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import {useSelector} from "react-redux"
@@ -22,6 +22,19 @@ import 'swiper/css/bundle'
 import './property.css'
 
 
+// style for modal................
+const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+  };
+
 
 const Property = () => {
     SwiperCore.use([Navigation])
@@ -32,6 +45,11 @@ const Property = () => {
     const [copied, setCopied] = useState(false);
     const [contact, setContact] = useState(false);
     const { currentUser } = useSelector((state) => state.user);
+
+    // for modal
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
 
     const fetchPropertyDetails = async () => {
 
@@ -62,6 +80,34 @@ const Property = () => {
     },[id]);
     return (
         <section className='p-container'>
+            <div>
+                
+                <Modal
+                    aria-labelledby="transition-modal-title"
+                    aria-describedby="transition-modal-description"
+                    open={open}
+                    onClose={handleClose}
+                    closeAfterTransition
+                    slots={{ backdrop: Backdrop }}
+                    slotProps={{
+                    backdrop: {
+                        timeout: 500,
+                    },
+                    }}
+                >
+                    <Fade in={open}>
+                    <Box sx={style}>
+                        <Typography id="transition-modal-title" variant="h6" component="h2">
+                        Text in a modal
+                        </Typography>
+                        <Typography id="transition-modal-description" sx={{ mt: 2 }}>
+                        Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+                        </Typography>
+                    </Box>
+                    </Fade>
+                </Modal>
+            </div>
+
             <Backdrop
                 sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
                 open={loading}
@@ -157,7 +203,10 @@ const Property = () => {
                                 </ul>
                                 {currentUser &&  (
                                 <Button
-                                    onClick={() => setContact(true)}
+                                    onClick={() => {
+                                        setContact(true)
+                                        setOpen(true)
+                                    }}
                                     className='listing-contact-button'
                                     color='info'
                                     variant='contained'
@@ -180,8 +229,6 @@ const Property = () => {
                 </>
                 
             )
-
-
             }
         </section>
   )

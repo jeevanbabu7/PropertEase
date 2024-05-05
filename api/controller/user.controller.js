@@ -27,7 +27,7 @@ export const updateUserInfo = async (req, res, next) => {
       );
   
       const { password, ...rest } = updatedUser._doc;
-      console.log("updated");
+      
       res.status(200).json(rest);
     } catch (error) {
       next(error);
@@ -35,6 +35,7 @@ export const updateUserInfo = async (req, res, next) => {
   };
 
   export const deleteUser = async (req, res, next) => {
+    console.log("hii");
     if (req.user.id !== req.params.id)
       return next(errorHandler(401, 'You can only delete your own account!'));
 
@@ -44,10 +45,18 @@ export const updateUserInfo = async (req, res, next) => {
       await User.findByIdAndDelete(req.params.id);
       res.clearCookie('access_token');
       res.status(200).json('User has been deleted!');
+      console.log("deleted");
 
     } catch (error) {
       next(error);
     }
   };
 
-  
+  export const getUsers = async (req,res,next) => {
+    try {
+      const data = await User.find();
+      res.status(200).json(data);
+    }catch(err) {
+      next(err)
+    }
+  }

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import Hamburger from 'hamburger-react';
 import { RampRight } from '@mui/icons-material';
@@ -20,17 +20,31 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { Outlet } from 'react-router-dom';
 import './header.css';
+import {useDispatch} from "react-redux"
+import { 
 
+    signOutUserStart,
+    signOutUserFailure,
+    signOutUserSuccess,
+
+    } from '../../redux/user/userSlice.js'
 function AccountMenu({imgUrl}) {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
+    const dispatch = useDispatch(); 
+    const navigate = useNavigate()
+
     const handleClick = (event) => {
       setAnchorEl(event.currentTarget);
     };
     const handleClose = () => {
       setAnchorEl(null);
     };
+
+
+
     const handleSignOUt = async (e) => {
+      console.log("hiii");
       e.preventDefault();
       try {
           dispatch(signOutUserStart())
@@ -46,6 +60,8 @@ function AccountMenu({imgUrl}) {
           dispatch(signOutUserFailure(err.message))
       }
   }
+
+  
 
     return (
       <React.Fragment>
@@ -105,9 +121,9 @@ function AccountMenu({imgUrl}) {
           </Link>
           <Divider />
           <MenuItem onClick={handleSignOUt}>
-            <ListItemIcon>
+            
               <LogoutIcon fontSize="small" /> {/* Assuming LogoutIcon is imported */}
-            </ListItemIcon>
+            
             Logout
           </MenuItem>
         </Menu>
