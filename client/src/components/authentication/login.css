@@ -11,12 +11,15 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 30rem;
+    max-width: 30rem; 
+    min-width: 23rem;
+    width: 100%; 
     gap: 2rem;
     text-align: center;
     background-color: #1F2A40;
     border-radius: 2rem;
-    
+    padding: 1rem; 
+   
 }
 
 .signin-container > input {
@@ -32,3 +35,16 @@
     color: white;
 }
 
+@media (max-width: 768px) {
+    .signin-container {
+        width: 35rem;
+        max-width: 20/rem; 
+    }
+}
+
+
+@media (max-width: 480px) {
+    .signin-container {
+        max-width: 15rem; 
+    }
+}

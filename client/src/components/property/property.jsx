@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { CircularProgress,Backdrop, Button, Modal, Fade ,Box, Typography} from '@mui/material';
 import SwiperCore, { Navigation } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -45,6 +45,7 @@ const Property = () => {
     const [copied, setCopied] = useState(false);
     const [contact, setContact] = useState(false);
     const { currentUser } = useSelector((state) => state.user);
+    const navigate = useNavigate()
 
     // for modal
     const [open, setOpen] = React.useState(false);
@@ -204,8 +205,9 @@ const Property = () => {
                                 {currentUser &&  (
                                 <Button
                                     onClick={() => {
-                                        setContact(true)
-                                        setOpen(true)
+                                        // setContact(true)
+                                        // setOpen(true)
+                                        navigate(`/property-request-form/${id}`);
                                     }}
                                     className='listing-contact-button'
                                     color='info'

@@ -115,6 +115,7 @@ import { useTheme } from '@emotion/react'
         }
         const handleSubmit = async (e) => {
             e.preventDefault();
+            console.log('ID' ,currentUser._id)
             try {
                 const res = await fetch(`/api/user/update/${currentUser._id}`, {
                     method: 'POST',
@@ -123,7 +124,7 @@ import { useTheme } from '@emotion/react'
                     },
                     body: JSON.stringify(userData)
                 });
-        
+                console.log("res",res);
                 if (!res.ok) {
                     throw new Error('Network response was not ok');
                 }
@@ -184,7 +185,7 @@ import { useTheme } from '@emotion/react'
 
         const handleShowListing = async () => {
             try {
-          
+                console.log("Hellooo",currentUser._id);
                 const res = await fetch(`/api/user/listings/${currentUser._id}`);
                 const data = await res.json();
                 setPropertyList(data);
@@ -218,7 +219,6 @@ import { useTheme } from '@emotion/react'
             if(file) {
                 handleFileUpload(file);
             }
-
             handleShowListing();
         },[file]);
 

@@ -1,5 +1,5 @@
 import React,{useState} from 'react'
-import {Link,useNavigate} from 'react-router-dom'
+import {Link,useNavigate, useParams} from 'react-router-dom'
 import { 
      TextField,
      FormControl,
@@ -19,7 +19,7 @@ import {
 from '@mui/icons-material'
 
 import { useDispatch, useSelector } from 'react-redux'
-import { signInFailure, signInStart, signInSuccess } from '../../redux/user/userSlice'
+import { signInFailure, signInStart, signInSuccess,clearError } from '../../redux/user/userSlice'
 import validator from 'email-validator'
 import Auth from './auth';
 import './login.css'
@@ -29,10 +29,13 @@ import './login.css'
 const Login = () => {
 
   const dispatch = useDispatch()
-
   const navigate = useNavigate();
-  const [formData,setFormData] = useState({});
+  
   const {loading,error} = useSelector((state) => state.user)
+  const params = useParams()
+  const [formData,setFormData] = useState({
+    role: params.role 
+  });
 
   const [alertMsg, setAlertMsg] = useState({
     open: error,
@@ -42,7 +45,7 @@ const Login = () => {
 
   const {open,vertical,horizontal} = alertMsg;
   const handleClose = () => {
-    setAlertMsg({ ...alertMsg, open: false });
+    dispatch(clearError());
   }
 
   const handleChange = (e) => {
@@ -54,32 +57,42 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+
     if(!validator.validate(formData.email)) {
       dispatch(signInFailure("Invalid email address"))
       return
     }
 
+    if(!formData.password) {
+      dispatch(signInFailure("Enter password"))
+      return;
+    }
+
     try {
      
-      const res = await fetch('http://localhost:5000/api/auth/signin', {
+      const res = await fetch('/api/auth/signin', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(formData),
       });
-      const data = await res.json();
-    
-   
 
+      const data = await res.json();
+      if(data.success == false) {
+        dispatch(signInFailure(data.message))
+        return
+      }
       dispatch(signInSuccess(data))
-      navigate('/profile');
+      navigate('/dashboard');
     }
     catch(err) {
+     
       dispatch(signInFailure(err.message));
     }
   
   }
+  console.log(error);
   const [showPassword, setShowPassword] = React.useState(false);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -89,14 +102,15 @@ const Login = () => {
   };
 
   const inputStyles = {
-    width: "25rem"
+    width: "100%",
+    maxWidth: "35rem"
   };
 
   return (
           <>
           <Snackbar
           anchorOrigin={{ vertical, horizontal }}
-          open={open}
+          open={error}
           message={error}
           key={vertical + horizontal}
           onClose={handleClose}
@@ -141,7 +155,7 @@ const Login = () => {
                 <Auth />
                 <div className="c-log-in">
                 <p>Don't have an account?</p>
-                <Link to='/sign-up'>
+                <Link to={`/sign-up/${params.role}`}>
                   <a  className="secondaryText ">Sign up</a>
                 </Link>
               </div>

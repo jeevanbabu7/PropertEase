@@ -6,14 +6,24 @@ import { BrowserRouter,Outlet,Route,Routes } from 'react-router-dom'
 
 const Layout = () => {
   return (
-    <div className='app'> 
-     <SideBarCmp />
-      <main className="content">
-
+    
+    <div className='app' style={{ overflow: 'auto' }}>
+      <style>
+        {`.app::-webkit-scrollbar {
+            display: none;
+          }`}
+      </style>
+      <SideBarCmp />
+      <main className="content" style={{
+        height: '100vh',
+        overflow: "auto"
+      }}>
         <Topbar />
         <Outlet />
       </main>
     </div>
+
+
   )
 }
 

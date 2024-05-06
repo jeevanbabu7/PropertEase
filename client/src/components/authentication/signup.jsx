@@ -70,7 +70,7 @@ const SignUp = () => {
       // }
 
       setError(null);
-      navigate('/sign-in');
+      navigate(`/sign-in/${params.role}`);
     }
     catch(err) {
       console.log(err);
@@ -173,7 +173,7 @@ const SignUp = () => {
 
         <div className="c-log-in">
         <p>Have an account?</p>
-        <Link to='/sign-in'>
+        <Link to={`/sign-in/${params.role}`}>
           <span className="secondaryText ">Sign in</span>
         </Link>
         {error && <p className='text-red-500 mt-5'>{error}</p>}

@@ -31,14 +31,9 @@ const DashboardComp = () => {
   const colors = tokens(theme.palette.mode);
   const {currentUser} = useSelector(state => state.user);
     return  (
-        // <Box m='20px'> 
-  
-        //     <Box display='flex' justifyContent='start' alignItems='center'>
-        //         <Header title='DASHBOARD' subtitle='Welcome to your dashboard.'/>
-        //     </Box>
-        // </Box>
+
         <Box m="20px">
-        {/* HEADER */}
+       
         <Box display="flex" justifyContent="space-between" alignItems="center">
           <Header title="DASHBOARD" subtitle="Welcome to your dashboard" />
   
@@ -58,15 +53,15 @@ const DashboardComp = () => {
           </Box> */}
         </Box>
   
-        {/* GRID & CHARTS */}
-        <Box
+   
+        {currentUser.role == 'admin' && (<Box
           display="grid"
           gridTemplateColumns="repeat(12, 1fr)"
           gridAutoRows="140px"
           gap="20px"
           
         >
-          {/* ROW 1 */}
+          
           <Box
             gridColumn="span 3"
             backgroundColor={colors.primary[400]}
@@ -195,7 +190,7 @@ const DashboardComp = () => {
             ))} */}
           </Box>
   
-        </Box>
+        </Box>)}
       </Box>
     )
 }

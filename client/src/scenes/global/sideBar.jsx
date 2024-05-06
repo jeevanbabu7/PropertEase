@@ -83,8 +83,12 @@ const SideBarCmp = () => {
           color: "#6870fa !important",
         },
         height: '100vh',
-
-        
+        overflow: 'auto', // This line ensures scrolling functionality while hiding the scrollbar
+        '-ms-overflow-style': 'none',  // Hide scrollbar for IE, Edge, and Firefox
+        '&::-webkit-scrollbar': {
+          display: 'none', // Hide scrollbar for Chrome, Safari, and Opera
+        },
+        paddingRight: "2.6rem"
       }}
     >
       <Sidebar collapsed={isCollapsed} 
@@ -170,38 +174,6 @@ const SideBarCmp = () => {
                 setSelected={setSelected}
               />
 
-              <Typography
-                variant="h6"
-                color={colors.grey[300]}
-                sx={{ p: "15px 0 5px 20px",
-                backgroundColor: `${colors.primary[400]}`
-                 }}
-              >
-                Data
-              </Typography>
-              {currentUser.role === 'admin' && (
-                              <Item
-                              title="Manage users"
-                              to="/team"
-                              icon={<PeopleOutlined />}
-                              selected={selected}
-                              setSelected={setSelected}
-                            />
-              )}
-              <Item
-                title="Contacts Information"
-                to="/contacts"
-                icon={<ContactsOutlined />}
-                selected={selected}
-                setSelected={setSelected}
-              />
-              <Item
-                title="Invoices Balances"
-                to="/invoices"
-                icon={<ReceiptOutlined />}
-                selected={selected}
-                setSelected={setSelected}
-              />
 
               <Typography
                 variant="h6"

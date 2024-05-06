@@ -3,6 +3,7 @@ import Home from './components/home/home'
 import SignUp from './components/authentication/signup'
 import Login from './components/authentication/login'
 import Header from './components/header/header'
+import LeaseRequestForm from './components/leaseform/leaseForm.jsx'
 import './App.css'
 import './index.css'
 import Properties from './components/properties/properties'
@@ -24,6 +25,7 @@ function App() {
   const [theme,colorMode] = useMode(); 
   return (
     <>
+    
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
         <CssBaseline/>
@@ -34,12 +36,13 @@ function App() {
               <Route path="/" element={<Header />}>
                 <Route index element={<Home />} />
                 <Route path="/sign-up/:role" element={<SignUp />} />
-                <Route path="/sign-in" element={<Login />} />
+                <Route path="/sign-in/:role" element={<Login />} />
                 <Route path="/properties/search" element={<Properties />} />
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/property" element={<PropertyForm />} />
                 <Route path="/update-property/:id" element={<UpdateProperty />} />
                 <Route path="/properties/:id" element={<Property />} />
+                <Route path='/property-request-form/:id' element={<LeaseRequestForm/>}/>
               </Route>
               
               <Route path='/dashboard' element={<Layout />}>
@@ -47,6 +50,7 @@ function App() {
                 <Route  path='tenants' element={<Users />}/> 
                 <Route  path='calendar' element={<Calendar />}/> 
                 <Route path='lease-requests' element={<Lease/>}/>
+                
               </Route>
             </Routes>
           </Router>

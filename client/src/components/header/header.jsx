@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import Hamburger from 'hamburger-react';
 import { RampRight } from '@mui/icons-material';
@@ -13,7 +13,8 @@ import {
   Divider,
   IconButton,
   Typography,
-  Tooltip
+  Tooltip,
+  Button
 } from '@mui/material';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import SettingsIcon from '@mui/icons-material/Settings';
@@ -28,12 +29,13 @@ import {
     signOutUserSuccess,
 
     } from '../../redux/user/userSlice.js'
+import { usePresence } from 'framer-motion';
 function AccountMenu({imgUrl}) {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
     const dispatch = useDispatch(); 
     const navigate = useNavigate()
-
+    const params = useParams()
     const handleClick = (event) => {
       setAnchorEl(event.currentTarget);
     };
@@ -151,6 +153,15 @@ const Header = () => {
         return { right: !menuOpen && "-200%" };
     };
 
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const open = Boolean(anchorEl);
+    const handleClick = (event) => {
+      setAnchorEl(event.currentTarget);
+    };
+    const handleClose = () => {
+      setAnchorEl(null);
+    };
+
 
 
    
@@ -179,12 +190,37 @@ const Header = () => {
                         {currentUser != null ? (
                             <AccountMenu imgUrl={currentUser.avatar}/>
                         ):(
-                            <Link to='/sign-in'>                        
-                                <button className="button">
-                                    <a href="">Sign in</a>
+                                                  
+                                <button className="button"
+                                    aria-controls={open ? 'basic-menu' : undefined}
+                                    aria-haspopup="true"
+                                    aria-expanded={open ? 'true' : undefined}
+                                    onClick={handleClick}
+                                
+                                >
+                                    Sign in
                                 </button>
-                            </Link>
+                                
+                           
+                            
                         )}
+                        <div>
+                                      <Menu
+                                        id="basic-menu"
+                                        anchorEl={anchorEl}
+                                        open={open}
+                                        onClose={handleClose}
+                                        MenuListProps={{
+                                          'aria-labelledby': 'fade-button',
+                                        }}
+                                        
+                                      >
+                                        <Link to='/sign-in/tenant'><MenuItem onClick={handleClose}>For tenants</MenuItem></Link>
+                                        <Link to='/sign-in/owner'><MenuItem onClick={handleClose}>For landlord</MenuItem></Link>
+                                        <Link to='/sign-in/admin'>
+                                          <MenuItem onClick={handleClose}>Admin</MenuItem></Link>
+                                      </Menu>
+                                    </div>
                     </div>
                 </OutsideClickHandler>
                 
