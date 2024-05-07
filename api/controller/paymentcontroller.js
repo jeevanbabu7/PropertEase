@@ -26,7 +26,7 @@ export const payRent = async (req,res,next) => {
     try {
         // Extract the payment details from the request body
         console.log("hiii");
-        const { tenantName, tenantId, ownerId} = req.body;
+        const { tenantName, tenantId, ownerId ,propertyName, amount} = req.body;
 
         // Create a new payment instance
         const payment = new Payment({
@@ -34,7 +34,9 @@ export const payRent = async (req,res,next) => {
             tenantId,
             ownerId,
             paymentDate: new Date(),
-            done: true
+            done: true,
+            propertyName,
+            amount
         });
 
         // Save the payment to the database
@@ -45,13 +47,13 @@ export const payRent = async (req,res,next) => {
     }
 }
 
-export const getPaymentHistory = async (res,req,next) => {
+export const getPaymentHistory = async (req,res,next) => {
     try { 
-        
-        const res = await Payment.find({tenantId: req.params.id });
-        console.log("hiiii");
-        res.send(200).json(res)
+    
+        const result = await Payment.find({tenantId: req.params.id });
+        res.status(200).json(result)
     }catch(err) {
+        console.log(err.message);
         next(err);
     }
 }

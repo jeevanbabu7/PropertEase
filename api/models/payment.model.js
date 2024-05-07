@@ -38,6 +38,12 @@ const paymentSchema = new mongoose.Schema({
    done: {
     type: Boolean,
     default: false
+   },
+   propertyName: {
+    type: String
+   },
+   amount: {
+    type: String
    }
 },{timestamps: true})
 
