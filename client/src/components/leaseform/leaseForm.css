@@ -4,12 +4,7 @@
     box-sizing: border-box;
     font-family: sans-serif;
 }
-body {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
+
 .container1 {
     position: relative;
     max-width: 35em;
@@ -17,6 +12,7 @@ body {
     padding: 25px;
     border-radius: 8px;
     box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    
 }
 .container1 header {
     font-size: 1.5rem;
@@ -46,7 +42,7 @@ textarea {
     margin-top: 20px;
 }
 .input-box label {
-    color: #333;
+    /* color: #333; */
 }
 .form .input-box input{
     position: relative;
@@ -65,14 +61,14 @@ textarea {
     box-shadow: 0 1px 0 rgba(0,0,0,0.1);
 }
 .form .column {
-    display: flex;
+   display: flex;
     column-gap: 15px;
 }
 .form .gender-box {
     margin-top: 20px;
 }
 .gender-box h3 {
-    color: #333;
+    /* color: #333; */
     font-size: 1 rem;
     font-weight: 400;
     margin-bottom: 8px;
@@ -91,7 +87,7 @@ textarea {
     cursor: pointer;
 }
 .gender label {
-    color: #707070;
+    /* color: #707070; */
 }
 .form button {
     height: 40px;

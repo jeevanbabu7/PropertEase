@@ -21,6 +21,10 @@ import Lease from './scenes/requests/lease.jsx'
 import Layout from './scenes/dashboard/'
 import DashboardComp from './components/dashboard/dashboardcomp.jsx'
 import Calendar from './scenes/calendar/calendar.jsx'
+import RequestDetails from './scenes/maintenance/requestDetails.jsx'
+import Vacate from './components/vacate/vacate.jsx'
+import AboutUsPage from './components/conatactHome/contactHome.jsx'
+import Payment from './scenes/payment/payment.jsx'
 
 function App() {
   const [theme,colorMode] = useMode(); 
@@ -44,6 +48,7 @@ function App() {
                 <Route path="/update-property/:id" element={<UpdateProperty />} />
                 <Route path="/properties/:id" element={<Property />} />
                 <Route path='/property-request-form/:id' element={<LeaseRequestForm/>}/>
+                <Route path='/about-us' element={<AboutUsPage />}/> 
               </Route>
               
               <Route path='/dashboard' element={<Layout />}>
@@ -52,6 +57,9 @@ function App() {
                 <Route  path='calendar' element={<Calendar />}/> 
                 <Route path='lease-requests' element={<Lease/>}/>
                 <Route path='maintenance-form' element={<MaintenanceForm/>}/>
+                <Route path='maintenance-form/:requestId' element={<RequestDetails/>}/>
+                <Route path='vacate' element={<Vacate/>}/>
+                <Route path='payment' element={<Payment/>}/>
                 
               </Route>
             </Routes>

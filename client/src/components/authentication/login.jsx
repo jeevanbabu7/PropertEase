@@ -84,7 +84,7 @@ const Login = () => {
         return
       }
       dispatch(signInSuccess(data))
-      navigate('/dashboard');
+      navigate('/profile');
     }
     catch(err) {
      

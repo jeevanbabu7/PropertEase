@@ -76,3 +76,35 @@ export const createMaintanenceRequest = async (req,res,next) => {
         next(err)
     }
 }
+
+export const getMaintanenceRequest = async (req,res,next) => {
+    try {   
+        const id = req.params.tenantId;
+        console.log("hii");
+        const result = await Maintenance.find({tenantId: id})
+        res.status(200).json(result)
+    }catch(err) {
+        next(err)
+    }
+}
+export const getMaintanenceRequestOwner = async (req,res,next) => {
+    try {   
+        const id = req.params.ownerId;
+        console.log("hii");
+        const result = await Maintenance.find({ownerId: id})
+        res.status(200).json(result)
+    }catch(err) {
+        next(err)
+    }
+}
+
+export const getMaintenanceDetails = async (req,res,next) => {
+    try {   
+        const id = req.params.requestId;
+        const result = await Maintenance.findById(id)
+        res.status(200).json(result)
+    }catch(err) {
+        next(err)
+    }
+}
+

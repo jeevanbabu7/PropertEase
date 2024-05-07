@@ -10,7 +10,7 @@ import GetStarted from "../GetStarted/getStarted"
 import Feedback from "../feedback/feedback"
 import Testimonials from "../testimonials/testimonials"
 import ContactUs from "../contact-us/contactUs"
-
+import HomeContact from "../conatactHome/contactHome"
 const Home = () => {
 
 
@@ -31,6 +31,7 @@ const Home = () => {
                 <Testimonials />
                 {/* <Contact /> */}
                 <ContactUs />
+                {/* <HomeContact /> */}
                 <FAQ />
                 {/* <Feedback /> */}
                 <GetStarted />

@@ -215,6 +215,27 @@ const PropertyForm = () => {
                         onChange={handleChange}
                         value={formData.address}
                     />
+                    <Box
+                        display='flex'
+                        gap={2}
+                    >
+                        <TextField 
+                            label="city"
+                            id='city'
+                            variant='filled'
+                            
+                            onChange={handleChange}
+                            value={formData.city}
+                        />
+                        <TextField 
+                            label="country"
+                            id='country'
+                            variant='filled'
+
+                            onChange={handleChange}
+                            value={formData.country}
+                        />
+                    </Box>
 
                     <Box
                         sx={{

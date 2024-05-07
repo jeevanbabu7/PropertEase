@@ -177,10 +177,11 @@ const Header = () => {
                 <h1 >PropertEase</h1>
                 <OutsideClickHandler onOutsideClick={closeMenu}>
                     <div style={getMenuStyles()} className="h-menu">
+                      <Link to='/'>Home</Link>
                         {currentUser != null ? (  
                             <Link to='/dashboard'>Dashboard</Link>
                         ): (
-                          <Link to='/'>Home</Link>
+                          <div></div>
                         )}
                         <Link to='/properties/search'>Properties</Link>
                         {window.location.pathname == '/' && <a href="/about-us">About Us</a>}

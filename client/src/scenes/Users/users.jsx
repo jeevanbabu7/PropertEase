@@ -30,26 +30,45 @@ const Users = () => {
 
     const fetchUser = async () => {
         console.log(currentUser._id);
-        const details = await fetch('/api/request/getTenants',{
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({id: currentUser._id})
-        });
+        if(currentUser.role == 'owner') {
+            const details = await fetch('/api/request/getTenants',{
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({id: currentUser._id})
+            });
+            const data = await details.json();
+            setUserData(data);
 
-        const data = await details.json();
-        setUserData(data);
-        console.log(data);
-   
+        }
+        else {
+            const details = await fetch(`/api/user/get`,{
+                method: 'GET'
+                
+            });
+
+            const data = await details.json();
+            console.log(data);
+            console.log("hii");
+            setUserData(data)
+            
+        }
+
         
-}
+       
+
+    }
+
+
     const handleRemoveUser = async (e) => {
+        console.log("hiiiiiiiiii");
+        console.log(e.target.id);
         const id = e.target.id;
-        const res = await fetch(`/api/user/delete/${id}`,{
+        const res = await fetch(`/api/user/delete/user/${id}`,{
             method: 'DELETE'
         });
-        console.log(res.json());
+        // console.log(res.json());
         fetchUser()
     }
 
@@ -62,6 +81,7 @@ const Users = () => {
         <ThemeProvider theme={theme}>
       
             <Box m='20px' >
+               
                 <Header title={title} subtitle={title} />
                 <Box m='40px 0 0 0' height="75vh">
                     <TableContainer component={Paper}>
@@ -100,8 +120,9 @@ const Users = () => {
 
                                          <TableCell align="left">{role == 'admin' ? row.role : row.name}</TableCell>
                                                                                 
-                                        {role == 'admin'? <TableCell align="right">{<Button id={row._id} variant='contained' color='error'
-                                            onClick={handleRemoveUser}
+                                        {role == 'admin'? <TableCell align="right">{
+                                            <Button id={row._id} variant='contained' color='error'
+                                             onClick={handleRemoveUser}
                                         >Remove</Button>}</TableCell> : <TableCell align="left"></TableCell>}
                                     </TableRow>
                                 )

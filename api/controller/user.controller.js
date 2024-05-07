@@ -60,3 +60,15 @@ export const updateUserInfo = async (req, res, next) => {
       next(err)
     }
   }
+
+
+  export const deteUsersForAdmin = async (req,res,next) => {
+    try {
+      const result = await User.findByIdAndDelete(req.params.id);
+      console.log(result)
+      res.status(200).json(result)
+    }
+    catch(err)  {
+      next(err)
+    }
+  }

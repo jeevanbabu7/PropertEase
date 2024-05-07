@@ -225,7 +225,7 @@ const Property = () => {
                                 alignItems: 'center'
                             }}
                         >
-                                <Map address={''} city={'Taliparamba'} country={'India'}/>
+                                <Map address={''} city={propertyDetails.city} country={propertyDetails.country}/>
                         </Grid>
                     </Grid>
                 </>

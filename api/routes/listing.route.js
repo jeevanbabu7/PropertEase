@@ -6,8 +6,8 @@ const router = express.Router();
 
 router.post('/create',verifyToken,createListing)
 router.delete('/delete/:id',verifyToken,deleteProperty);
-router.post('/update/:id',verifyToken,updateProperty) // update property data
-router.get('/property/:id',verifyToken,propertyDetails); // fetch info about single property
+router.post('/update/:id',updateProperty) // update property data
+router.get('/property/:id',propertyDetails); // fetch info about single property
 router.get('/get',getListing);
 
 

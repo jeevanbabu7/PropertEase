@@ -115,7 +115,11 @@ const LeaseRequestForm = () => {
     },[])
     return (
 
-        <section className='req-wrapper'>
+        <section className='req-wrapper'
+            sx={{
+                color: colors.primary[100]
+            }}
+        >
             <div className="container1" 
                 style={{
                     backgroundColor: colors.primary[400]

@@ -288,10 +288,10 @@ const Lease = () => {
                                          <TableCell align="left">{row.status}</TableCell>
                                          
                                          <TableCell align="left">
-                                            {currentUser.role == 'owner' && (<Box display='flex' flexDirection='column' gap={2}>
+                                            {/* {currentUser.role == 'owner' && (<Box display='flex' flexDirection='column' gap={2}>
                                                 <Button variant='contained' color='secondary' id={row._id} name='Accepted' onClick={(e) => handleClick(e,row.propertyId)}>Accept</Button>
                                                 <Button name='Rejected' variant='contained' color='error' id={row._id} onClick={(e) => handleClick(e,row.propertyId)}>Reject</Button>
-                                            </Box>)}
+                                            </Box>)} */}
                                          </TableCell>
                                                                                 
                                         

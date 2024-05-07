@@ -34,7 +34,7 @@ const FAQ = () => {
         return (
             <div key={index} className={`faq ${isOpen ? 'active' : ''}`} onClick={() => toggleQuestion(index)} id="FAQ">
                 <div className="question">
-                    <h3 className='primaryText'>{item.que}</h3>
+                    <h3 >{item.que}</h3>
                     
                     <svg width="15" height="10" viewBox="0 0 42 25">
                         <path d="M3 3L21 21L39 3" stroke="white" strokeWidth="7" strokeLinecap="round"/>

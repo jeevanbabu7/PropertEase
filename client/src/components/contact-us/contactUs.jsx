@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './contact.css'; // Import your CSS file
 import { MailOutline, LocationCityOutlined } from '@mui/icons-material';
+import { Button } from '@mui/material';
 
 function ContactUs() {
     const [formData, setFormData] = useState({
@@ -20,7 +21,7 @@ function ContactUs() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
+        console.log("hii");
         const { senderEmail, name, phoneNumber, query } = formData;
         const subject = "New Contact Form Submission";
         const body = `Name: ${name}%0AEmail: ${senderEmail}%0APhone Number: ${phoneNumber}%0AQuery: ${query}`;
@@ -39,21 +40,21 @@ function ContactUs() {
                     <div className="right-side">
                         <div className="topic-text">Contact Us</div>
                         <p>If you have any type of queries feel free to contact us. It's our pleasure to help you.</p>
-                        <form onSubmit={handleSubmit}>
+                        <form >
                             <div className="input-box">
                                 <input type="email" name="senderEmail" placeholder="Enter sender's email" value={formData.senderEmail} onChange={handleChange} required />
                             </div>
                             <div className="input-box">
                                 <input type="text" name="name" placeholder="Enter your name" value={formData.name} onChange={handleChange} required />
                             </div>
-                            <div className="input-box">
-                                <input type="text" name="phoneNumber" placeholder="Enter your phone number" value={formData.phoneNumber} onChange={handleChange} required />
-                            </div>
+                            
                             <div className="input-box message-box">
                                 <textarea name="query" placeholder="Type your query..." value={formData.query} onChange={handleChange} required></textarea>
+                                
                             </div>
                             <div className="button">
-                                <input type="submit" value="Submit" className='submit-btn' />
+                                <Button  onClick={handleSubmit} style={{color: 'white'}}>Send</Button>
+                                
                             </div>
                         </form>
                     </div>

@@ -29,6 +29,8 @@ import {
   MessageOutlined,
   LogoDevOutlined,
   LogoutOutlined,
+  ExitToAppOutlined,
+  Payment
   
 } from '@mui/icons-material';
 import { useDispatch, useSelector } from 'react-redux';
@@ -109,7 +111,8 @@ const SideBarCmp = () => {
         '&::-webkit-scrollbar': {
           display: 'none', // Hide scrollbar for Chrome, Safari, and Opera
         },
-        paddingRight: "2.6rem"
+        paddingRight: "2.6rem",
+        height: '100vh'
       }}
     >
       <Sidebar collapsed={isCollapsed} 
@@ -187,15 +190,22 @@ const SideBarCmp = () => {
             )}
 
             <Box >
+              {/* <Item
+                title="Dashboard"
+                to="/dashboard"
+                icon={<HomeOutlined />}
+                selected={selected}
+                setSelected={setSelected}
+              /> */}
+
               <Item
                 title="Dashboard"
                 to="/dashboard"
                 icon={<HomeOutlined />}
                 selected={selected}
                 setSelected={setSelected}
+                
               />
-
-
               <Typography
                 variant="h6"
                 color={colors.grey[300]}
@@ -223,6 +233,11 @@ const SideBarCmp = () => {
                   setSelected={setSelected}
                 />
               )}
+
+             
+         
+           
+
               {currentUser.role === 'tenant' && (
                   <Item
                   title="Properties"
@@ -232,15 +247,7 @@ const SideBarCmp = () => {
                   setSelected={setSelected}
                 />
               )}
-              {currentUser.role === 'tenant' && (
-                  <Item
-                  title="Payments"
-                  to="/payment-history"
-                  icon={<MoneyOutlined />}
-                  selected={selected}
-                  setSelected={setSelected}
-                />
-              )}
+ 
               {currentUser.role != 'admin' && (
                               <Item
                               title="Lease requests"
@@ -250,6 +257,14 @@ const SideBarCmp = () => {
                               setSelected={setSelected}
                             />
               )}
+                <Item
+                    title="Payment"
+                    to="/dashboard/payment"
+                    icon={<Payment />}
+                    selected={selected}
+                    setSelected={setSelected}
+                    
+                  />
               <Item
                 title="Calendar"
                 to="/dashboard/calendar"
@@ -264,6 +279,16 @@ const SideBarCmp = () => {
                 selected={selected}
                 setSelected={setSelected}
               />
+              <Item
+                title="vacate"
+                to="/dashboard/vacate"
+                icon={<ExitToAppOutlined />}
+                selected={selected}
+                setSelected={setSelected}
+                
+              />
+
+
 
               {/* <Typography
                 variant="h6"
@@ -312,7 +337,7 @@ const SideBarCmp = () => {
                 Others
               </Typography>
 
-              <Item
+              {/* <Item
                 title="Notification"
                 to="/Notifications"
                 icon={<NotificationsOutlined />}
@@ -325,7 +350,7 @@ const SideBarCmp = () => {
                 icon={<MessageOutlined />}
                 selected={selected}
                 setSelected={setSelected}
-              />
+              /> */}
 
               <Item
                 title="Log out"

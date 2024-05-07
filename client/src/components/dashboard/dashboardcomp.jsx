@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Typography, Box, useTheme,Button  } from "@mui/material";
 import { tokens } from '../../utils/theme';
 import { DownloadOutlined,EmailOutlined,PointOfSaleOutlined ,Person2Outlined,TrafficOutlined} from '@mui/icons-material';
 import StatBox from './stat';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 export const Header = ({title,subtitle}) => {
 
     const theme = useTheme();
@@ -30,6 +31,7 @@ const DashboardComp = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const {currentUser} = useSelector(state => state.user);
+  const navigate = useNavigate()
     return  (
 
         <Box m="20px">
@@ -197,8 +199,8 @@ const DashboardComp = () => {
           <Box
           display="grid"
           gridTemplateColumns="repeat(12, 1fr)"
-          gridAutoRows="140px"
-          gap="20px"
+          gridAutoRows="200px"
+          gap="240px"
           
         >
           
@@ -206,20 +208,20 @@ const DashboardComp = () => {
             gridColumn="span 3"
             backgroundColor={colors.primary[400]}
             display="flex"
+            flexDirection='column'
             alignItems="center"
             justifyContent="center"
+            gap={3}
           >
+            <h2>User details</h2>
             <StatBox
-              title="12,361"
-              subtitle="Emails Sent"
+              title={currentUser.username}
+              subtitle={currentUser.email}
               progress="0.75"
-              increase="+14%"
-              icon={
-                <EmailOutlined
-                  sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
-                />
-              }
+              // increase="+14%"
+     
             />
+            <Button variant='contained' color='secondary' onClick={() => navigate('/profile')}>Edit profile</Button>
           </Box>
           </Box>
         )}

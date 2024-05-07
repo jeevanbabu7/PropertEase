@@ -1,5 +1,6 @@
 import React from 'react'
 import './getStarted.css'
+import { Link } from 'react-router-dom'
 const GetStarted = () => {
   return (
     <section className="g-wrapper">
@@ -11,11 +12,14 @@ const GetStarted = () => {
                     Find your residence soon
                 </span>
 
+                
+                <Link to="/sign-up/tenant">
                 <button className='button get-started-btn'>
-                    <form action="/properties">
-                        <a href="/sign-in">Get Started</a>
-                    </form>
-                </button>
+                   
+                        Get Started
+                    
+                   </button>
+                </Link>
             </div>
         </div>
     </section>

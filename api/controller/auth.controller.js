@@ -5,9 +5,9 @@ import bcryptjs from 'bcryptjs'
 
 export const signup = async (req, res, next) => {
 
-  const { username, email, password,role} = req.body;
-  const hashedPassword = bcryptjs.hashSync(password, 10);
-  const newUser = new User({ username, email, password: hashedPassword,role});
+  const { username, email, password,role} = req.body; // data from form
+  const hashedPassword = bcryptjs.hashSync(password, 10); // hash password
+  const newUser = new User({ username, email, password: hashedPassword,role}); //create user
   try {
     await newUser.save();
     res.status(201).json('User created successfully!');
@@ -20,17 +20,17 @@ export const signIn = async (req, res, next) => {
   const { email, password,role} = req.body;
 
   try {
-    const validUser = await User.findOne({ email: email,role });
+    const validUser = await User.findOne({ email: email,role }); // check user exist in database
     if (!validUser) return next(errorHandler(404, 'User not found!'));
-    console.log(validUser);
-    const validPassword = bcryptjs.compareSync(password, validUser.password);
+
+    const validPassword = bcryptjs.compareSync(password, validUser.password); // check entered password
     if (!validPassword) return next(errorHandler(401, 'Wrong credentials!'));
     
-    const token = jwt.sign({ id: validUser._id}, process.env.JWT_SECRET);
+    const token = jwt.sign({ id: validUser._id}, process.env.JWT_SECRET); // create token to store in cookie
     console.log(token);
     const { password: pass, ...rest } = validUser._doc;
     res
-      .cookie('access_token', token)
+      .cookie('access_token', token) // store token in cookies
       .status(200)
       .json(rest);
   } catch (error) {

@@ -62,7 +62,7 @@ export const updateProperty = async (req,res,next) => {
 
     try {
         const update = await Listing.findByIdAndUpdate(req.params.id,req.body,{new: true})
-
+        console.log(update);
         res.status(200).json(update)
     }
     catch(err) {
@@ -110,10 +110,11 @@ export const getListing = async (req,res,next) => {
         const bathrooms = parseInt(req.query.bathrooms) || 1;
 
         const listings = await Listing.find({
-            name: {$regex: searchTerm,$options: 'i'},
+            city: {$regex: searchTerm,$options: 'i'},
             furnished,
             parking,
-            bedrooms
+            bedrooms,
+            bathrooms
         }).sort(
             {[sort]: order}
         ).limit(limit).skip(startIndex);

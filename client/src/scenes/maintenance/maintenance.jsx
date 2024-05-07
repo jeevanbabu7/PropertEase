@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import './maintenance.css'; // Import your CSS file
-import {CloudUploadOutlined} from '@mui/icons-material'
+import {CloudUploadOutlined, SearchOutlined} from '@mui/icons-material'
 
 import {useSelector} from 'react-redux'
-import { Box, Button, Grid } from '@mui/material';
+import { Box, Button, Grid, IconButton, InputBase, Table, TableCell, TableContainer, TableHead, TableRow ,Paper, TableBody } from '@mui/material';
 
 import { getDownloadURL, getStorage, uploadBytesResumable,ref } from 'firebase/storage'
 import app from '../../firebase';
 import { useNavigate } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
 import { Header } from '../../components/dashboard/dashboardcomp';
-
-
+import { tokens } from '../../utils/theme';
+import { useTheme } from '@emotion/react';
 const VisuallyHiddenInput = styled('input')({
   clip: 'rect(0 0 0 0)',
   clipPath: 'inset(50%)',
@@ -40,6 +40,8 @@ function RadioInput({ icon, text, isChecked, handleChange }) {
 }
 
 function MaintenanceForm() {
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode)
   const [selectedOption, setSelectedOption] = useState('Appliances');
   const [requestText, setRequestText] = useState('');
   const [propertyData,setPropertyData] = useState({});
@@ -60,15 +62,16 @@ function MaintenanceForm() {
 
   const [uploading,setUploading] = useState(false);
   const [error,setError] = useState(false);
+  const [maintenanceReqs,setMaintenanceReqs] = useState([])
 
   const handleSubmit = async (event) => {
     event.preventDefault()
-    setPropertyData(propertyData[0]);
-    
+    setPropertyData(propertyData);
+  
     const body = {
       tenantId: currentUser._id,
-      tenantName: currentUser._id,
-      ownerId: propertyData[0].userRef,
+      tenantName: currentUser.username,
+      // ownerId: propertyData[0].userRef,
       propertyId: propertyData[0]._id,
       propertyName: propertyData[0].name ,
       solved: false,
@@ -76,8 +79,8 @@ function MaintenanceForm() {
       images: fileURLs
 
     }
-    console.log("hhhhh");
-    console.log(body);
+
+
     const res = await fetch(`/api/request//maintenance/create`,{
       method: 'POST',
       headers: {
@@ -159,6 +162,8 @@ function MaintenanceForm() {
         )
     }
 
+   
+
 
     useEffect(() => {
      
@@ -171,8 +176,23 @@ function MaintenanceForm() {
           
           const property = await res.json();
           setPropertyData(property)
-          console.log(propertyData)
-
+          
+          if(currentUser.role == 'tenant') {
+            const result = await fetch(`/api/request/maintenance/user/get/${currentUser._id}`,{
+              method: 'GET'
+            });
+  
+            const requests = await result.json();
+            setMaintenanceReqs(requests);
+          }
+          else {
+              const result = await fetch(`/api/request/maintenance/owner/get/${currentUser._id}`,{
+                method: 'GET'
+              });
+    
+              const requests = await result.json();
+              setMaintenanceReqs(requests);
+          }
         }catch(err) {
           console.log(err);
         }
@@ -183,7 +203,7 @@ function MaintenanceForm() {
     },[]);
   return (
     <section className="main-wrapper" style={{paddingLeft: '2rem'}}>
-        <Grid container >
+        {currentUser.role == 'tenant' && (<Grid container >
           <Grid item xs={12} md={6}>
             <div className="main-container">
                   <h2>Describe the issue</h2>
@@ -194,7 +214,6 @@ function MaintenanceForm() {
                   
                   <input type="submit" value="Request" onClick={handleSubmit} />
                   </form>
-
               </div>
           </Grid>
           <Grid item xs={12} md={6}
@@ -260,10 +279,10 @@ function MaintenanceForm() {
                     }
                   </Box>
           </Grid>
-        </Grid>
+        </Grid>)}
         <Box m='20px' sx={{height: "100vh"}}>
-                <Header title="Lease requests" subtitle="New Requests"/>
-                <Box 
+                <Header title="Maintenance requests" subtitle=""/>
+                {/* <Box 
                     sx={{width:"14rem"}}
                     backgroundColor={colors.primary[400]}
                     borderRadius='3px'  
@@ -272,74 +291,52 @@ function MaintenanceForm() {
                     <IconButton type='button' sx={{p:1}}>
                     <SearchOutlined/>
                     </IconButton>
-                </Box>
-                <Box m='40px 0 5rem 0' >
-                    <TableContainer component={Paper}>
-                        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                            <TableHead
-                                sx={{
-                                    backgroundColor:'#373A89'
-                                }}
-                            >
-                            <TableRow>
-                                <TableCell>ID</TableCell>
-                                <TableCell>Name</TableCell>
-                                <TableCell align="left">Email</TableCell>
-                                {role == 'admin' ? <TableCell align="left">Access Level</TableCell> : <TableCell align="center">Property Name</TableCell>}
-                                <TableCell align="center">Request</TableCell>
-                                <TableCell align="left">Status</TableCell>
-                                <TableCell align="right"></TableCell>
-                            </TableRow>
-                            </TableHead>
-                            <TableBody>
-                            {leaseRequests.filter((item) => item.status === 'pending').length == 0  && <TableRow 
-                                sx={{ '&:last-child td, &:last-child th': { border: 0 },
-                                backgroundColor: colors.primary[400],
-                        }}
-                            ><TableCell>No new requests</TableCell>
-                            <TableCell></TableCell>
-                            <TableCell></TableCell>
-                            <TableCell></TableCell>
-                            <TableCell></TableCell>
-                            <TableCell></TableCell>
-                            <TableCell></TableCell>
+                </Box> */}
+                  <Box m='40px 0 5rem 0' >
+                      <TableContainer component={Paper}>
+                          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                              <TableHead
+                                  sx={{
+                                      backgroundColor:'#373A89'
+                                  }}
+                              >
+                              <TableRow>
+                                  <TableCell>ID</TableCell>
+                                  <TableCell>Name</TableCell>
+                                  <TableCell>Property Name</TableCell>
+                                  <TableCell>Request</TableCell>
+                                 
+                              </TableRow>
+                              </TableHead>
+                              <TableBody>
+                              
+                              {maintenanceReqs.length > 0 ?maintenanceReqs.map((row,index) => {
                                 
-                            </TableRow>
-
-                            } 
-                            {filteredLeaseRequests.length > 0 ?  filteredLeaseRequests.filter(item => item.status == 'pending').map((row,index) => {
-                               
-                                return (
-                                        <TableRow
-                                        key={index}
-                                        sx={{ '&:last-child td, &:last-child th': { border: 0 },
-                                                backgroundColor: colors.primary[400]
-                                        }}
-                                        >
-                                        <TableCell align="left">{index + 1}</TableCell>
-                                        {/* Name */}
-                                        <TableCell component="th" scope="row">
-                                            {row.tenantName}
-                                        </TableCell>
-                                        
-                                        
-                                         <TableCell align="left">{ row.tenantEmail}</TableCell>
-
-                                         <TableCell align="center">{row.propertyName}</TableCell>
-                                         <TableCell align="center"><Button color='info' onClick={(e) => handleViewMessage(e,row.message)}>View Message</Button></TableCell>
-                                         <TableCell align="left">{row.status}</TableCell>
-                                         <TableCell align="left">
-                                            {role == 'owner' && (<Box display='flex' flexDirection='column' gap={2}>
-                                                <Button variant='contained' color='secondary' id={row._id} name='Accepted' onClick={(e) => handleClick(e,row.propertyId,row.tenantId,row.tenantName)}>Accept</Button>
-                                                <Button name='Rejected' variant='contained' color='error' id={row._id} onClick={(e) => handleClick(e,row.propertyId)}>Reject</Button>
-                                            </Box>)}
-                                         </TableCell>
-                                    </TableRow>
-                                )
-                            }): ''}
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
+                                  return (
+                                          <TableRow
+                                          key={index}
+                                          sx={{ '&:last-child td, &:last-child th': { border: 0 },
+                                                  backgroundColor: colors.primary[400]
+                                          }}
+                                          >
+                                          <TableCell align="left">{index + 1}</TableCell>
+                                          {/* Name */}
+                                          <TableCell component="th" scope="row">
+                                              {row.tenantName}
+                                          </TableCell>
+                                          
+                                          
+                                          {/* <TableCell align="left">{ row.tenantEmail}</TableCell> */}
+                                          <TableCell align="left">{row.propertyName}</TableCell>
+                                          <TableCell align="leftt"><Button color='info' onClick={(e) => navigate(`/dashboard/maintenance-form/${row._id}`)}>View details</Button></TableCell>
+                                          {/* <TableCell align="left">{row.status}</TableCell> */}
+                                      </TableRow>
+                                  )
+                              }): ''}
+                              </TableBody>
+                          </Table>
+                      </TableContainer>
+                  </Box>
                 </Box>
         
     </section>
