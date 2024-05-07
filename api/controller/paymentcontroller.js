@@ -57,3 +57,15 @@ export const getPaymentHistory = async (req,res,next) => {
         next(err);
     }
 }
+
+export const getHistoryForOwner = async (req,res,next) => {
+    try { 
+    
+        const result = await Payment.find({ownerId: req.params.id });
+        res.status(200).json(result)
+    }catch(err) {
+        console.log(err.message);
+        next(err);
+    }
+}
+

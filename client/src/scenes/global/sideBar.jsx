@@ -257,14 +257,22 @@ const SideBarCmp = () => {
                               setSelected={setSelected}
                             />
               )}
-                <Item
+            {( currentUser.role == 'tenant' && <Item
                     title="Payment"
                     to="/dashboard/payment"
                     icon={<Payment />}
                     selected={selected}
                     setSelected={setSelected}
                     
-                  />
+                  />)}
+            {( currentUser.role == 'owner' && <Item
+                    title="Payment"
+                    to="/dashboard/payment/owner"
+                    icon={<Payment />}
+                    selected={selected}
+                    setSelected={setSelected}
+                    
+                  />)}
               <Item
                 title="Calendar"
                 to="/dashboard/calendar"
@@ -272,21 +280,21 @@ const SideBarCmp = () => {
                 selected={selected}
                 setSelected={setSelected}
               />
-              <Item
+{(currentUser.role != 'admin' && <Item
                 title="Maintenance"
                 to="/dashboard/maintenance-form"
                 icon={<SettingsOutlined />}
                 selected={selected}
                 setSelected={setSelected}
-              />
-              <Item
+              />)}
+{(            currentUser.role == 'tenant'&&   <Item
                 title="vacate"
                 to="/dashboard/vacate"
                 icon={<ExitToAppOutlined />}
                 selected={selected}
                 setSelected={setSelected}
                 
-              />
+              />)}
 
 
 

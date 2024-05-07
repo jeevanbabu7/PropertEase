@@ -219,7 +219,7 @@ import { useTheme } from '@emotion/react'
             if(file) {
                 handleFileUpload(file);
             }
-            handleShowListing();
+            if(currentUser.role == 'owner') handleShowListing();
         },[file]);
 
 

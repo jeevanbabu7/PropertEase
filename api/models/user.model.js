@@ -1,5 +1,7 @@
 import mongoose from "mongoose";
 
+const validRoles = ["tenant", "owner", "admin"];
+
 const userSchema = new mongoose.Schema({
     username: {
         type: String, 
@@ -22,12 +24,16 @@ const userSchema = new mongoose.Schema({
     },
     role: {
         type: String,
-        required: true
-    },
-    
+        required: true,
+        validate: {
+            validator: function(value) {
+                return validRoles.includes(value);
+            },
+            message: props => `${props.value} is not a valid role. Valid roles are: ${validRoles.join(", ")}`
+        }
+    }
+}, { timestamps: true });
 
-},{timestamps: true})
-
-const User = mongoose.model('User',userSchema);
+const User = mongoose.model('User', userSchema);
 
 export default User;

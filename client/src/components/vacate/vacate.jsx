@@ -17,7 +17,8 @@ const Vacate = () => {
                 body: JSON.stringify({tenantId: "none",tenantName: 'none',occupied: 'false'})
             });
             
-            console.log(res);
+           
+            // console.log(data);
             navigate('/profile');
             alert("Vacated successfully")
         }catch(err) {

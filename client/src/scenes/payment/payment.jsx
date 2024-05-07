@@ -154,7 +154,7 @@ const Payment = () => {
                             </TableRow>
                             </TableHead>
                             <TableBody>
-                            {paymentHistory.length > 0 ? paymentHistory.map((row,index) => {
+                            {currentUser.role == 'tenant' && paymentHistory.length > 0 ? paymentHistory.map((row,index) => {
                                
                                 return (
                                         <TableRow
@@ -165,7 +165,7 @@ const Payment = () => {
                                         >
                                         <TableCell align="left">{index + 1}</TableCell>
                                          <TableCell align="left">{ row.propertyName}</TableCell>
-
+                                        
                                          <TableCell align="left">{row.amount} $</TableCell>
                                          <TableCell align="left">Paid</TableCell>
                                          

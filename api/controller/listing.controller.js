@@ -61,8 +61,8 @@ export const updateProperty = async (req,res,next) => {
     // }
 
     try {
+        console.log("hiiiiiiii");
         const update = await Listing.findByIdAndUpdate(req.params.id,req.body,{new: true})
-        console.log(update);
         res.status(200).json(update)
     }
     catch(err) {

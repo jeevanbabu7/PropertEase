@@ -25,6 +25,7 @@ import RequestDetails from './scenes/maintenance/requestDetails.jsx'
 import Vacate from './components/vacate/vacate.jsx'
 import AboutUsPage from './components/conatactHome/contactHome.jsx'
 import Payment from './scenes/payment/payment.jsx'
+import LandLordPayment from './scenes/payment/landlord.jsx'
 
 function App() {
   const [theme,colorMode] = useMode(); 
@@ -60,6 +61,7 @@ function App() {
                 <Route path='maintenance-form/:requestId' element={<RequestDetails/>}/>
                 <Route path='vacate' element={<Vacate/>}/>
                 <Route path='payment' element={<Payment/>}/>
+                <Route path='payment/owner' element={<LandLordPayment />}/>
                 
               </Route>
             </Routes>
