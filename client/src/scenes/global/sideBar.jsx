@@ -31,9 +31,12 @@ import {
   LogoutOutlined,
   
 } from '@mui/icons-material';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { tokens } from '../../utils/theme'
+import { tokens } from '../../utils/theme.js';
+
+import {signOutUserSuccess,signOutUserFailure,signOutUserStart} from '../../redux/user/userSlice.js'
+
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
@@ -62,8 +65,26 @@ const SideBarCmp = () => {
   const colors = tokens(theme.palette.mode);
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [selected, setSelected] = useState("Dashboard");
-  console.log(selected);
   const {currentUser} = useSelector(state => state.user)
+
+  const dispatch = useDispatch()
+  const handleSignOUt = async (e) => {
+    e.preventDefault();
+    console.log("hii");
+    try {
+        dispatch(signOutUserStart())
+         const res = await fetch('/api/auth/signout')
+         const data = await res.json();
+         if(data.success == false) {
+            return;
+         }
+         dispatch(signOutUserSuccess(data))
+         navigate('/')
+         console.log("Sign out successfull..");
+    }catch(err) {
+        dispatch(signOutUserFailure(err.message))
+    }
+}
   return (
     <Box
       sx={{
@@ -238,7 +259,7 @@ const SideBarCmp = () => {
               />
               <Item
                 title="Maintenance"
-                to="/maintenance"
+                to="/dashboard/maintenance-form"
                 icon={<SettingsOutlined />}
                 selected={selected}
                 setSelected={setSelected}
@@ -309,7 +330,7 @@ const SideBarCmp = () => {
               <Item
                 title="Log out"
                 to="/"
-                icon={<LogoutOutlined />}
+                icon={<LogoutOutlined onClick={handleSignOUt}/>}
                 selected={selected}
                 setSelected={setSelected}
               />

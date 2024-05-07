@@ -11,8 +11,6 @@ const persistConfig = {
 }
 
 const rootReducer = combineReducers({user: userReducer});
-
-
 const persistedReducer = persistReducer(persistConfig,rootReducer)
 
 export const store = configureStore({
@@ -22,6 +20,4 @@ export const store = configureStore({
       serializableCheck: false,
     }),
 });
-
-
 export const persistor = persistStore(store);

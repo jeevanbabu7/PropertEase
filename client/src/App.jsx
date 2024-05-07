@@ -15,6 +15,7 @@ import { ColorModeContext,useMode } from './utils/theme.js'
 import { CssBaseline, ThemeProvider } from '@mui/material'
 
 import SideBarCmp from './scenes/global/sideBar'
+import MaintenanceForm from './scenes/maintenance/maintenance.jsx'
 import Users from './scenes/Users/users.jsx'
 import Lease from './scenes/requests/lease.jsx'
 import Layout from './scenes/dashboard/'
@@ -50,6 +51,7 @@ function App() {
                 <Route  path='tenants' element={<Users />}/> 
                 <Route  path='calendar' element={<Calendar />}/> 
                 <Route path='lease-requests' element={<Lease/>}/>
+                <Route path='maintenance-form' element={<MaintenanceForm/>}/>
                 
               </Route>
             </Routes>

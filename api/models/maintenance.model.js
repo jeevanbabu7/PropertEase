@@ -1,9 +1,32 @@
-// import mongoose from "mongoose";
+import mongoose from "mongoose";
 
-// const maintanenceSchema = new mongoose.Schema({
-//     propertyId: 
-// },{timestamps: true})
+const maintanenceSchema = new mongoose.Schema({
+    tenantId: {
+        type: String,
+    },
+    tenantName: {
+        type: String,
+    },
+    propertyId: {
+        type: String,
+    },
+    propertyName: {
+        type: String,
+    },
+    ownerId: {
+        type: String
+    },
+    solved: {
+        type: Boolean
+    },
+    message: {
+        type: String
+    },
+    images: {
+        type: Array
+    }
+},{timestamps: true})
 
-// const Listing = mongoose.model('Listing',listingSchema)
+const Maintenance = mongoose.model('Maintenance',maintanenceSchema)
 
-// export default Listing;
+export default Maintenance;

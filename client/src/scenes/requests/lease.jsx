@@ -78,7 +78,7 @@ const Lease = () => {
         
 }
 
-    const handleClick = async (e,propertyId) => {
+    const handleClick = async (e,propertyId,tenantId,tenantName) => {
         const {id,name} = e.target;
         console.log(name);
       
@@ -101,7 +101,11 @@ const Lease = () => {
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({occupied: true})
+                    body: JSON.stringify({
+                        occupied: true,
+                        tenantName,
+                        tenantId
+                    })
                 });
 
                 console.log(accept.json())
@@ -229,7 +233,7 @@ const Lease = () => {
                                          <TableCell align="left">{row.status}</TableCell>
                                          <TableCell align="left">
                                             {role == 'owner' && (<Box display='flex' flexDirection='column' gap={2}>
-                                                <Button variant='contained' color='secondary' id={row._id} name='Accepted' onClick={(e) => handleClick(e,row.propertyId)}>Accept</Button>
+                                                <Button variant='contained' color='secondary' id={row._id} name='Accepted' onClick={(e) => handleClick(e,row.propertyId,row.tenantId,row.tenantName)}>Accept</Button>
                                                 <Button name='Rejected' variant='contained' color='error' id={row._id} onClick={(e) => handleClick(e,row.propertyId)}>Reject</Button>
                                             </Box>)}
                                          </TableCell>

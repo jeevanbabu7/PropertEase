@@ -9,6 +9,6 @@ router.get('/test' ,test)
 router.post('/update/:id',verifyToken,updateUserInfo)
 router.delete('/delete/:id',verifyToken,deleteUser)
 router.get('/listings/:id',verifyToken,getUserListing)
-router.get('/get',getUsers);
+router.get('/get',getUsers); // for admin
 
 export default router;

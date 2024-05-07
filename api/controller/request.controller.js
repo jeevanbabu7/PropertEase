@@ -1,5 +1,6 @@
 import Listing from "../models/listing.model.js";
 import RentRequests from "../models/request.model.js";
+import Maintenance from "../models/maintenance.model.js";
 
 export const createRequest = async (req,res,next) => {
     try {
@@ -54,3 +55,24 @@ export const getTenants = async (req, res, next) => {    // fetch tenets for par
     }
 }
 
+export const getPropertyDetails = async (req,res,next) => {
+
+    try {
+        const tenantId = req.params.tenantId;
+        const result = await Listing.find({tenantId: tenantId});
+        res.status(200).json(result);
+
+    }catch(err) {
+        next(err)
+    }
+}
+
+export const createMaintanenceRequest = async (req,res,next) => {
+
+    try{
+        const request = await Maintenance.create(req.body);
+        return res.status(200).json(request)
+    }catch(err) {
+        next(err)
+    }
+}
