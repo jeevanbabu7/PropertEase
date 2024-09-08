@@ -50,8 +50,8 @@ A full-stack home rental application built using the MERN stack (MongoDB, Expres
 	JWT_SECRET=<your-jwt-secret>
 5. Run the development servers:
 	```bash
-		# For backend
-		npm start	
-		# For frontend (in client directory)
-		npm run dev
+	# For backend
+	npm start	
+	# For frontend (in client directory)
+	npm run dev
 6. Open the app in your browser at `http://localhost:5173`.
