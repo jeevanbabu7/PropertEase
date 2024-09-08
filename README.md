@@ -55,3 +55,4 @@ A full-stack home rental application built using the MERN stack (MongoDB, Expres
 	# For frontend (in client directory)
 	npm run dev
 6. Open the app in your browser at `http://localhost:5173`.
+   
