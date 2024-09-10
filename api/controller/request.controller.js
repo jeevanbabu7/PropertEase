@@ -90,8 +90,8 @@ export const getMaintanenceRequest = async (req,res,next) => {
 export const getMaintanenceRequestOwner = async (req,res,next) => {
     try {   
         const id = req.params.ownerId;
-        console.log("hii");
         const result = await Maintenance.find({ownerId: id})
+        console.log(result);
         res.status(200).json(result)
     }catch(err) {
         next(err)

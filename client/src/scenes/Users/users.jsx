@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux'
-import { Box, Typography, ThemeProvider, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper, Button } from '@mui/material'
+import { Box, Typography, ThemeProvider, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper, Button, InputBase, IconButton } from '@mui/material'
 import { useTheme } from '@emotion/react'
 
 import { tokens } from '../../utils/theme.js'
@@ -7,6 +7,7 @@ import { mockDataTeam } from '../../data/mockData.js'
 import {
     AdminPanelSettingsOutlined,
     LockOpenOutlined,
+    SearchOutlined,
     SecurityOutlined
 } from '@mui/icons-material'
 
@@ -62,8 +63,7 @@ const Users = () => {
 
 
     const handleRemoveUser = async (e) => {
-        console.log("hiiiiiiiiii");
-        console.log(e.target.id);
+
         const id = e.target.id;
         const res = await fetch(`/api/user/delete/user/${id}`,{
             method: 'DELETE'
@@ -76,6 +76,8 @@ const Users = () => {
         fetchUser();
     },[]);
 
+    console.log(userData);
+
     const role = currentUser.role;
     return (
         <ThemeProvider theme={theme}>
@@ -84,6 +86,16 @@ const Users = () => {
                
                 <Header title={title} subtitle={title} />
                 <Box m='40px 0 0 0' height="75vh">
+                <Box 
+                    sx={{width:"14rem" , marginBottom: '2rem'}}
+                    backgroundColor={colors.primary[400]}
+                    borderRadius='3px'  
+                >
+                    <InputBase sx={{ml: 2,flex: 1}} placeholder='Search'/>
+                    <IconButton type='button' sx={{p:1}}>
+                    <SearchOutlined/>
+                    </IconButton>
+                </Box>
                     <TableContainer component={Paper}>
                         <Table sx={{ minWidth: 650 }} aria-label="simple table">
                             <TableHead

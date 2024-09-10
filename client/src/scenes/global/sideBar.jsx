@@ -247,7 +247,15 @@ const SideBarCmp = () => {
                   setSelected={setSelected}
                 />
               )}
- 
+               {currentUser.role == 'admin' && (
+                              <Item
+                              title="Manage users"
+                              to="tenants"
+                              icon={<PeopleOutlined />}
+                              selected={selected}
+                              setSelected={setSelected}
+                            />
+              )}
               {currentUser.role != 'admin' && (
                               <Item
                               title="Lease requests"

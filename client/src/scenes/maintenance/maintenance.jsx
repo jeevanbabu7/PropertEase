@@ -12,6 +12,9 @@ import { styled } from '@mui/material/styles';
 import { Header } from '../../components/dashboard/dashboardcomp';
 import { tokens } from '../../utils/theme';
 import { useTheme } from '@emotion/react';
+
+
+
 const VisuallyHiddenInput = styled('input')({
   clip: 'rect(0 0 0 0)',
   clipPath: 'inset(50%)',
@@ -71,7 +74,7 @@ function MaintenanceForm() {
     const body = {
       tenantId: currentUser._id,
       tenantName: currentUser.username,
-      // ownerId: propertyData[0].userRef,
+      ownerId: propertyData[0].userRef,
       propertyId: propertyData[0]._id,
       propertyName: propertyData[0].name ,
       solved: false,
@@ -201,6 +204,7 @@ function MaintenanceForm() {
       
 
     },[]);
+    console.log(maintenanceReqs);
   return (
     <section className="main-wrapper" style={{paddingLeft: '2rem'}}>
         {currentUser.role == 'tenant' && (<Grid container >
