@@ -8,6 +8,7 @@ import requestRouter from './routes/request.route.js'
 import cors from 'cors' // imppppppppp
 import cookieParser from 'cookie-parser';
 import paymentRouter from './routes/payment.route.js'
+import path from 'path';
 
 dotenv.config(); 
 
@@ -22,6 +23,7 @@ mongoose.connect(process.env.MONGO_URL)
 
 const port = 5000;
 
+const __dirname = path.resolve();
 const app = express()
 
 app.use(cookieParser()) // use cookie for authentication
@@ -38,6 +40,12 @@ app.use('/api/auth',authRouter)
 app.use('/api/listing',listingRouter)
 app.use('/api/request',requestRouter);
 app.use('/api/payment',paymentRouter);
+
+app.use(express.static(path.join(__dirname, '/client/dist')));
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '/client/dist/index.html'));
+});
+
 
 app.use((err,req,res,next) => {
     const statusCode = err.statusCode || 500;
